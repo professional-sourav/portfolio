@@ -6,23 +6,35 @@
   <title>Sourav Chakraborty - Portfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/alpinejs" defer></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#108a00'
+          }
+        }
+      }
+    }
+  </script>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans">
   <header class="bg-white shadow">
     <div class="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Sourav Chakraborty</h1>
+      <h1 class="text-2xl font-bold text-primary">Sourav Chakraborty</h1>
       <nav>
-        <a href="#about" class="mx-2 hover:text-blue-500">About</a>
-        <a href="#portfolio" class="mx-2 hover:text-blue-500">Portfolio</a>
-        <a href="#contact" class="mx-2 hover:text-blue-500">Contact</a>
+        <a href="#about" class="mx-2 hover:text-primary">About</a>
+        <a href="#portfolio" class="mx-2 hover:text-primary">Portfolio</a>
+        <a href="#reviews" class="mx-2 hover:text-primary">Reviews</a>
+        <a href="#contact" class="mx-2 hover:text-primary">Contact</a>
       </nav>
     </div>
   </header>
 
   <main class="max-w-6xl mx-auto p-6">
     <section id="about" class="mb-10">
-      <h2 class="text-xl font-semibold mb-4">About Me</h2>
-      <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+      <h2 class="text-xl font-semibold mb-4 text-primary">About Me</h2>
+      <div class="flex flex-col md:flex-row items-start md:items-start gap-6">
         <img src="Me Prof.jpg" alt="Sourav Chakraborty" class="w-40 h-40 object-cover rounded-lg shadow">
         <div>
           <p class="leading-relaxed">
@@ -44,53 +56,104 @@
             I also work with Python and Node.js for data handling and scripting, and prefer Tailwind CSS for clean frontend design.
           </p>
           <p class="mt-4 leading-relaxed">
-            Notable projects include:
-            <ul class="list-disc list-inside mt-2">
-              <li><a href="https://atarim.io" class="text-blue-600">atarim.io</a> – Laravel, React, WordPress</li>
-              <li><a href="https://cvvcart.com/" class="text-blue-600">cvvcart.com</a> – Laravel e-commerce</li>
-              <li><a href="https://hus.se/" class="text-blue-600">hus.se</a> – Laravel</li>
-              <li><a href="http://www.nextstopwhoknows.com/" class="text-blue-600">nextstopwhoknows.com</a> – WordPress</li>
-              <li><a href="https://1800granola.com/" class="text-blue-600">1800granola.com</a> – WordPress</li>
-            </ul>
-          </p>
-          <p class="mt-4 leading-relaxed">
-            My GitHub: <a href="https://github.com/professional-sourav" class="text-blue-600">professional-sourav</a>
+            My GitHub: <a href="https://github.com/professional-sourav" class="text-primary">professional-sourav</a>
           </p>
         </div>
       </div>
     </section>
 
-    <section id="portfolio" class="mb-10" x-data="{ category: 'All' }">
-      <h2 class="text-xl font-semibold mb-4">Portfolio</h2>
-
-      <div class="mb-6 space-x-3">
-        <button @click="category = 'All'" :class="category === 'All' ? 'bg-blue-600 text-white' : 'bg-white border'" class="px-4 py-2 rounded shadow">All</button>
-        <button @click="category = 'Laravel'" :class="category === 'Laravel' ? 'bg-blue-600 text-white' : 'bg-white border'" class="px-4 py-2 rounded shadow">Laravel</button>
-        <button @click="category = 'WordPress'" :class="category === 'WordPress' ? 'bg-blue-600 text-white' : 'bg-white border'" class="px-4 py-2 rounded shadow">WordPress</button>
-        <button @click="category = 'API'" :class="category === 'API' ? 'bg-blue-600 text-white' : 'bg-white border'" class="px-4 py-2 rounded shadow">API</button>
-      </div>
-
+    <section id="portfolio" class="mb-10">
+      <h2 class="text-xl font-semibold mb-4 text-primary">Portfolio</h2>
       <div class="grid md:grid-cols-2 gap-6">
-        <template x-for="item in [
-          {title: 'Atarim Plugin & API', category: 'WordPress', description: 'Built custom plugins and API integrations for Atarim real-time collaboration tools.'},
-          {title: 'Nandan SaaS Tools', category: 'Laravel', description: 'Led development of innovative web tools using Laravel and Docker.'},
-          {title: 'API Automation Platform', category: 'API', description: 'Created a task orchestration system using Laravel Queues and third-party APIs.'},
-          {title: 'WordPress Funnel Sites', category: 'WordPress', description: 'Developed conversion-optimized themes using Thrive and Elementor.'},
-        ]" :key="item.title">
-          <div x-show="category === 'All' || item.category === category" class="transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg p-4 border bg-white rounded">
-            <h3 class="font-semibold text-lg" x-text="item.title"></h3>
-            <p class="text-sm text-gray-600 mb-2" x-text="item.category"></p>
-            <p x-text="item.description"></p>
-          </div>
-        </template>
+        <a href="https://atarim.io" target="_blank" class="block p-4 border bg-white rounded shadow hover:shadow-lg transition-all">
+          <h3 class="font-semibold text-lg text-primary">Atarim Plugin & API</h3>
+          <p class="text-sm text-gray-600 mb-2">WordPress + Laravel</p>
+          <p>Built real-time collaboration tools, custom plugins, and API integrations for agencies and clients.</p>
+        </a>
+        <a href="https://coastal.carelinelive.com/" target="_blank" class="block p-4 border bg-white rounded shadow hover:shadow-lg transition-all">
+          <h3 class="font-semibold text-lg text-primary">CareLineLive Coastal</h3>
+          <p class="text-sm text-gray-600 mb-2">Laravel + Livewire</p>
+          <p>Developed dashboards and healthcare data interfaces for a carer management platform.</p>
+        </a>
+        <a href="https://ch.cosnet.co/" target="_blank" class="block p-4 border bg-white rounded shadow hover:shadow-lg transition-all">
+          <h3 class="font-semibold text-lg text-primary">COSNET</h3>
+          <p class="text-sm text-gray-600 mb-2">Laravel</p>
+          <p>Custom WordPress site setup and backend optimization for a telecom service provider.</p>
+        </a>
+        <a href="https://americansaudisupply.com/" target="_blank" class="block p-4 border bg-white rounded shadow hover:shadow-lg transition-all">
+          <h3 class="font-semibold text-lg text-primary">American Saudi Supply</h3>
+          <p class="text-sm text-gray-600 mb-2">Laravel Ecommerce</p>
+          <p>Designed and developed a B2B WooCommerce store with shipping and invoice automation.</p>
+        </a>
+        <a href="https://hus.se/" target="_blank" class="block p-4 border bg-white rounded shadow hover:shadow-lg transition-all">
+          <h3 class="font-semibold text-lg text-primary">Hus.se</h3>
+          <p class="text-sm text-gray-600 mb-2">Laravel</p>
+          <p>Optimized performance and implemented custom reporting features for property listings.</p>
+        </a>
+        <a href="https://www.melbourne.intercontinental.com" target="_blank" class="block p-4 border bg-white rounded shadow hover:shadow-lg transition-all">
+          <h3 class="font-semibold text-lg text-primary">Intercontinental Melbourne</h3>
+          <p class="text-sm text-gray-600 mb-2">WordPress & WooCommerce</p>
+          <p>Supported migration and updates for a luxury hotel booking site with custom modules.</p>
+        </a>
+        <a href="http://www.nextstopwhoknows.com/" target="_blank" class="block p-4 border bg-white rounded shadow hover:shadow-lg transition-all">
+          <h3 class="font-semibold text-lg text-primary">Next Stop Who Knows</h3>
+          <p class="text-sm text-gray-600 mb-2">Travel Blog (WordPress)</p>
+          <p>Maintenance and customization of a travel blogger’s site with affiliate systems.</p>
+        </a>
+        <a href="https://1800granola.com/" target="_blank" class="block p-4 border bg-white rounded shadow hover:shadow-lg transition-all">
+          <h3 class="font-semibold text-lg text-primary">WordPress, 1800Granola</h3>
+          <p class="text-sm text-gray-600 mb-2">WooCommerce</p>
+          <p>Built an organic granola eCommerce store with custom cart logic and discount flows.</p>
+        </a>
+        <a href="https://www.wpvigil.com/" target="_blank" class="block p-4 border bg-white rounded shadow hover:shadow-lg transition-all">
+          <h3 class="font-semibold text-lg text-primary">WP Vigil</h3>
+          <p class="text-sm text-gray-600 mb-2">Laravel + Filament + WordPress</p>
+          <p>Developed dashboards and healthcare data interfaces for a carer management platform.</p>
+        </a>
+        <a href="https://www.unsw.edu.au/" target="_blank" class="block p-4 border bg-white rounded shadow hover:shadow-lg transition-all">
+          <h3 class="font-semibold text-lg text-primary">UNSW</h3>
+          <p class="text-sm text-gray-600 mb-2">WordPress</p>
+          <p>Developed dashboards and healthcare data interfaces for a carer management platform.</p>
+        </a>
+      </div>
+    </section>
+
+    <section id="reviews" class="mb-10">
+      <h2 class="text-xl font-semibold mb-4 text-primary">Client Reviews</h2>
+      <div class="space-y-6">
+        <div class="p-4 bg-white rounded shadow">
+          <h3 class="font-semibold text-lg text-primary">Members listing CMS</h3>
+          <p class="text-sm text-gray-500">Jun 3, 2016 - Jul 26, 2016 | ⭐ 4.7</p>
+          <p class="mt-2">"What I liked with Sourav is that he is fast, often available and the quality of his work is worth every penny. We will continue our work with Sourav for new projects."</p>
+        </div>
+        <div class="p-4 bg-white rounded shadow">
+          <h3 class="font-semibold text-lg text-primary">Development of Various Web Applications for Business</h3>
+          <p class="text-sm text-gray-500">Aug 24, 2016 - Jan 25, 2018 | ⭐ 5.0</p>
+          <p class="mt-2">"Sourav was a pleasure to work with and produced to spec code and web apps which we still use to this day. I can highly recommend him for any similar work!"</p>
+        </div>
+        <div class="p-4 bg-white rounded shadow">
+          <h3 class="font-semibold text-lg text-primary">Looking for a Full Stack, Laravel developer to hire for full time</h3>
+          <p class="text-sm text-gray-500">Dec 26, 2018 - Jan 3, 2019 | ⭐ 5.0</p>
+          <p class="mt-2">"Good resource. Will work with him for sure."</p>
+        </div>
+        <div class="p-4 bg-white rounded shadow">
+          <h3 class="font-semibold text-lg text-primary">Looking PHP and codeigniter Developer</h3>
+          <p class="text-sm text-gray-500">Mar 5, 2020 - Mar 18, 2020 | ⭐ 5.0</p>
+          <p class="mt-2">"His communication was top-notch, he met all deadlines, and his skills were strong. I enjoyed working with him and will likely have additional jobs for him in the future."</p>
+        </div>
+        <div class="p-4 bg-white rounded shadow">
+          <h3 class="font-semibold text-lg text-primary">Need Wordpress Developer ASAP!</h3>
+          <p class="text-sm text-gray-500">Oct 31, 2020 - Nov 2, 2020 | ⭐ 5.0</p>
+          <p class="mt-2">"Sourav did a great job with my website projects so far! Will definitely be working with him again!"</p>
+        </div>
       </div>
     </section>
 
     <section id="contact">
-      <h2 class="text-xl font-semibold mb-2">Contact</h2>
+      <h2 class="text-xl font-semibold mb-2 text-primary">Contact</h2>
       <p>Email: sourav@example.com</p>
-      <p>LinkedIn: <a href="https://linkedin.com/in/yourprofile" class="text-blue-600">linkedin.com/in/yourprofile</a></p>
-      <p>GitHub: <a href="https://github.com/professional-sourav" class="text-blue-600">github.com/professional-sourav</a></p>
+      <p>LinkedIn: <a href="https://linkedin.com/in/yourprofile" class="text-primary">linkedin.com/in/yourprofile</a></p>
+      <p>GitHub: <a href="https://github.com/professional-sourav" class="text-primary">github.com/professional-sourav</a></p>
     </section>
   </main>
 
