@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sourav Chakraborty - Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+  <header class="bg-white shadow">
+    <div class="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Sourav Chakraborty</h1>
+      <nav>
+        <a href="#about" class="mx-2 hover:text-blue-500">About</a>
+        <a href="#portfolio" class="mx-2 hover:text-blue-500">Portfolio</a>
+        <a href="#contact" class="mx-2 hover:text-blue-500">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-6">
+    <section id="about" class="mb-10">
+      <h2 class="text-xl font-semibold mb-2">About Me</h2>
+      <p>
+        Full-Stack Developer with 8+ years of experience specializing in Laravel, WordPress, and API-driven architectures.
+        Worked on high-traffic SaaS and e-commerce platforms, with deep knowledge in backend performance optimization,
+        plugin development, and frontend integration using React and Tailwind CSS.
+      </p>
+    </section>
+
+    <section id="portfolio" class="mb-10" x-data="{ category: 'All' }">
+      <h2 class="text-xl font-semibold mb-4">Portfolio</h2>
+
+      <div class="mb-6 space-x-3">
+        <button @click="category = 'All'" :class="category === 'All' ? 'bg-blue-600 text-white' : 'bg-white border'" class="px-4 py-2 rounded shadow">All</button>
+        <button @click="category = 'Laravel'" :class="category === 'Laravel' ? 'bg-blue-600 text-white' : 'bg-white border'" class="px-4 py-2 rounded shadow">Laravel</button>
+        <button @click="category = 'WordPress'" :class="category === 'WordPress' ? 'bg-blue-600 text-white' : 'bg-white border'" class="px-4 py-2 rounded shadow">WordPress</button>
+        <button @click="category = 'API'" :class="category === 'API' ? 'bg-blue-600 text-white' : 'bg-white border'" class="px-4 py-2 rounded shadow">API</button>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <template x-for="item in [
+          {title: 'Atarim Plugin & API', category: 'WordPress', description: 'Built custom plugins and API integrations for Atarim real-time collaboration tools.'},
+          {title: 'Nandan SaaS Tools', category: 'Laravel', description: 'Led development of innovative web tools using Laravel and Docker.'},
+          {title: 'API Automation Platform', category: 'API', description: 'Created a task orchestration system using Laravel Queues and third-party APIs.'},
+          {title: 'WordPress Funnel Sites', category: 'WordPress', description: 'Developed conversion-optimized themes using Thrive and Elementor.'},
+        ]" :key="item.title">
+          <div x-show="category === 'All' || item.category === category" class="transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg p-4 border bg-white rounded">
+            <h3 class="font-semibold text-lg" x-text="item.title"></h3>
+            <p class="text-sm text-gray-600 mb-2" x-text="item.category"></p>
+            <p x-text="item.description"></p>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="text-xl font-semibold mb-2">Contact</h2>
+      <p>Email: sourav@example.com</p>
+      <p>LinkedIn: <a href="https://linkedin.com/in/yourprofile" class="text-blue-600">linkedin.com/in/yourprofile</a></p>
+      <p>GitHub: <a href="https://github.com/yourusername" class="text-blue-600">github.com/yourusername</a></p>
+    </section>
+  </main>
+
+  <footer class="text-center text-sm text-gray-500 mt-10 mb-4">
+    &copy; 2025 Sourav Chakraborty. All rights reserved.
+  </footer>
+</body>
+</html>
