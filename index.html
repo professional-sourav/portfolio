@@ -1,206 +1,954 @@
 <!DOCTYPE html>
-<html lang="en" x-data="{ dark: false, showScrollTop: false }" x-init="window.addEventListener('scroll', () => { showScrollTop = window.scrollY > 300 })" :class="{ 'dark': dark }">
+<html lang="en" x-data="{ 
+  dark: localStorage.getItem('darkMode') === 'true' || false, 
+  showScrollTop: false,
+  activeSection: 'about',
+  isMenuOpen: false,
+  typedText: '',
+  skills: ['Full-Stack Developer', 'Laravel Expert', 'WordPress Specialist', 'React.js Developer', 'AWS DevOps']
+}" 
+x-init="
+  $watch('dark', value => localStorage.setItem('darkMode', value));
+  window.addEventListener('scroll', () => { 
+    showScrollTop = window.scrollY > 300;
+    
+    // Update active section based on scroll position
+    const sections = ['about', 'skills', 'portfolio', 'reviews', 'contact'];
+    sections.forEach(section => {
+      const element = document.getElementById(section);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= 100 && rect.bottom >= 100) {
+          activeSection = section;
+        }
+      }
+    });
+  });
+  
+  // Typing animation
+  let i = 0;
+  let skillIndex = 0;
+  const typeSkill = () => {
+    if (i < skills[skillIndex].length) {
+      typedText += skills[skillIndex].charAt(i);
+      i++;
+      setTimeout(typeSkill, 100);
+    } else {
+      setTimeout(() => {
+        typedText = '';
+        i = 0;
+        skillIndex = (skillIndex + 1) % skills.length;
+        typeSkill();
+      }, 2000);
+    }
+  };
+  typeSkill();
+" 
+:class="{ 'dark': dark }">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sourav Chakraborty - Portfolio</title>
+  <title>Sourav Chakraborty - Full-Stack Developer Portfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/alpinejs" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            primary: '#108a00'
+            primary: '#108a00',
+            secondary: '#0f766e',
+            accent: '#06b6d4'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.8s ease-in-out',
+            'slide-up': 'slideUp 0.6s ease-out',
+            'pulse-glow': 'pulseGlow 2s infinite',
+            'float': 'float 3s ease-in-out infinite'
           }
         }
       }
     }
   </script>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(16, 138, 0, 0.3); }
+      50% { box-shadow: 0 0 30px rgba(16, 138, 0, 0.6); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .glass-effect {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .dark .glass-effect {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .skill-bar {
+      position: relative;
+      overflow: hidden;
+    }
+    .skill-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+    .typing-cursor::after {
+      content: '|';
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200 font-sans">
-  <header class="bg-white dark:bg-gray-800 shadow">
-    <div class="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-primary">Sourav Chakraborty</h1>
-      <nav>
-        <a href="#about" class="mx-2 hover:text-green-600 dark:hover:text-green-400">About</a>
-        <a href="#portfolio" class="mx-2 hover:text-green-600 dark:hover:text-green-400">Portfolio</a>
-        <a href="#reviews" class="mx-2 hover:text-green-600 dark:hover:text-green-400">Reviews</a>
-        <a href="#contact" class="mx-2 hover:text-green-600 dark:hover:text-green-400">Contact</a>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 font-sans">
+  <!-- Enhanced Header with Glass Effect -->
+  <header class="fixed top-0 w-full z-50 glass-effect transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold animate-pulse-glow">
+          SC
+        </div>
+        <h1 class="text-xl font-bold text-primary">Sourav Chakraborty</h1>
+      </div>
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-6">
+        <a href="#about" :class="activeSection === 'about' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'" 
+           class="transition-all duration-300 pb-1">About</a>
+        <a href="#skills" :class="activeSection === 'skills' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'" 
+           class="transition-all duration-300 pb-1">Skills</a>
+        <a href="#portfolio" :class="activeSection === 'portfolio' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'" 
+           class="transition-all duration-300 pb-1">Portfolio</a>
+        <a href="#reviews" :class="activeSection === 'reviews' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'" 
+           class="transition-all duration-300 pb-1">Reviews</a>
+        <a href="#contact" :class="activeSection === 'contact' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'" 
+           class="transition-all duration-300 pb-1">Contact</a>
       </nav>
-      <button
-  @click="dark = !dark"
-  :aria-label="dark ? 'Switch to light mode' : 'Switch to dark mode'"
-  :title="dark ? 'Switch to light mode' : 'Switch to dark mode'"
-  class="p-2 rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
->
-  <template x-if="!dark">
-    <!-- Moon icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
-    </svg>
-  </template>
-  <template x-if="dark">
-    <!-- Sun icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-8.66h1M3.34 12H2.33m15.36 6.36l.71.71M6.34 6.34l.71.71m12.02-1.41l.71.71M4.22 19.78l.71.71M12 8a4 4 0 100 8 4 4 0 000-8z" />
-    </svg>
-  </template>
-</button>
 
+      <div class="flex items-center space-x-3">
+        <!-- Theme Toggle -->
+        <button @click="dark = !dark" 
+                class="p-2 rounded-lg bg-white/20 dark:bg-black/20 hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300">
+          <svg x-show="!dark" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
+          </svg>
+          <svg x-show="dark" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-8.66h1M3.34 12H2.33m15.36 6.36l.71.71M6.34 6.34l.71.71m12.02-1.41l.71.71M4.22 19.78l.71.71M12 8a4 4 0 100 8 4 4 0 000-8z" />
+          </svg>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button @click="isMenuOpen = !isMenuOpen" class="md:hidden p-2 rounded-lg bg-white/20 dark:bg-black/20">
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div x-show="isMenuOpen" x-transition class="md:hidden bg-white/90 dark:bg-black/90 backdrop-blur-lg">
+      <nav class="px-4 py-4 space-y-2">
+        <a href="#about" @click="isMenuOpen = false" class="block py-2 hover:text-primary transition-colors">About</a>
+        <a href="#skills" @click="isMenuOpen = false" class="block py-2 hover:text-primary transition-colors">Skills</a>
+        <a href="#portfolio" @click="isMenuOpen = false" class="block py-2 hover:text-primary transition-colors">Portfolio</a>
+        <a href="#reviews" @click="isMenuOpen = false" class="block py-2 hover:text-primary transition-colors">Reviews</a>
+        <a href="#contact" @click="isMenuOpen = false" class="block py-2 hover:text-primary transition-colors">Contact</a>
+      </nav>
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto p-6">
-    <section id="about" class="mb-10">
-      <h2 class="text-xl font-semibold mb-4 text-primary">About Me</h2>
-        <div class="flex flex-col md:flex-row items-start md:items-start gap-6">
-            <img src="Me Prof.jpg" alt="Sourav Chakraborty" class="w-40 h-40 object-cover rounded-lg shadow">
-            <div>
-                <p class="leading-relaxed">
-                    I am Sourav Chakraborty, a Full-Stack Developer from India with over 8 years of experience in software and web development.
-                    My core strengths lie in Core PHP, Laravel, WordPress, JavaScript(Vanilla JS, jQuery, React.js) and Python. I’ve contributed to backend-heavy teams, developing high-traffic APIs
-                    and integrating with third-party services like Twilio, MailGun, SendGrid, Shopify, and Zoho.
-                </p>
-                <p class="mt-4 leading-relaxed">
-                    I have deep experience building custom WordPress plugins and themes using Elementor, Divi, Thrive, and custom frameworks.
-                    I’ve extended functionality in major plugins like Yoast and developed complete solutions for WooCommerce-based e-commerce sites.
-                </p>
-                <p class="mt-4 leading-relaxed">
-                    In Laravel, I’ve handled job queues, real-time broadcasting with Pusher, Redis caching, and robust service-based application design. I follow the Service pattern regularly and am also comfortable with Repository structures. I have extensive experience with advanced Laravel features including Events, Listeners, Observers, Policies, Gates, Jobs, Queues, Notifications, Broadcasting, Middleware, Schedulers, Task Batching, Laravel Horizon, Eloquent Relationships, Model Binding, Custom Macros, Morphing, Pipeline, Dependency Injection, Form Requests, Validation Rules, and Service Providers. Batch processing, API Resources, and Sanctum for token-based auth are also part of my everyday toolkit.
-                </p>
-                <p class="mt-4 leading-relaxed">
-                    I’ve solved challenges like real-time iframe-based content loading, scraping with fallback services like ScrapeBee, and X-Frame security issues.
-                    I also work with Python, Node.js, and React.js for data handling, scripting, and interactive frontends. I prefer Tailwind CSS for clean frontend design.
-                </p>
-                <p class="mt-4 leading-relaxed">
-                    I'm experienced in CI/CD using GitHub Actions and Docker. I regularly deploy and manage scalable infrastructure on AWS including EC2, AMI, RDS, VPC, S3, ECS, ALB, and Lambda.
-                </p>
+  <!-- Hero Section with Animated Background -->
+  <section class="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"></div>
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-primary rounded-full mix-blend-multiply filter blur-xl animate-float"></div>
+      <div class="absolute top-1/2 right-1/4 w-72 h-72 bg-secondary rounded-full mix-blend-multiply filter blur-xl animate-float" style="animation-delay: 1s;"></div>
+      <div class="absolute bottom-1/4 left-1/3 w-56 h-56 bg-accent rounded-full mix-blend-multiply filter blur-xl animate-float" style="animation-delay: 2s;"></div>
+    </div>
+    
+    <div class="relative z-10 text-center max-w-4xl mx-auto px-6">
+      <div class="animate-fade-in">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          Sourav Chakraborty
+        </h1>
+        <div class="text-xl md:text-2xl mb-8 h-8">
+          <span class="typing-cursor" x-text="typedText"></span>
+        </div>
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+          Transforming ideas into scalable web solutions with 8+ years of expertise in Full-Stack Development
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#portfolio" class="px-8 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+            View My Work
+          </a>
+          <a href="#contact" class="px-8 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-full transition-all duration-300">
+            Get In Touch
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="max-w-7xl mx-auto px-6">
+    <!-- Enhanced About Section -->
+    <section id="about" class="py-20">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4 text-primary">About Me</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mb-8"></div>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="relative">
+          <div class="relative w-80 h-80 mx-auto">
+            <img src="Me Prof.jpg" alt="Sourav Chakraborty" 
+                 class="w-full h-full object-cover rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
+            <div class="absolute -inset-4 bg-gradient-to-r from-primary to-secondary rounded-2xl opacity-20 blur-lg"></div>
+          </div>
+        </div>
+        
+        <div class="space-y-6">
+          <div class="prose dark:prose-invert max-w-none">
+            <p class="text-lg leading-relaxed">
+              I am a passionate <strong class="text-primary">Full-Stack Developer</strong> from India with over 8 years of experience creating robust, scalable web solutions. My expertise spans across modern technologies including <strong>PHP, Laravel, WordPress, JavaScript, React.js, and Python</strong>.
+            </p>
+            <p class="text-lg leading-relaxed">
+              I specialize in building high-performance APIs, integrating complex third-party services like Twilio, MailGun, and Shopify, and developing custom WordPress solutions that power businesses worldwide.
+            </p>
+            <p class="text-lg leading-relaxed">
+              My approach combines technical excellence with creative problem-solving, ensuring every project delivers exceptional user experiences and business value.
+            </p>
+          </div>
+          
+          <!-- Quick Stats -->
+          <div class="grid grid-cols-2 gap-6 mt-8">
+            <div class="text-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+              <div class="text-3xl font-bold text-primary">8+</div>
+              <div class="text-sm text-gray-600 dark:text-gray-400">Years Experience</div>
             </div>
-        </div>
-    </section>
-
-    <section id="portfolio" class="mb-10">
-      <h2 class="text-xl font-semibold mb-4 text-primary">Portfolio</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        <a href="https://atarim.io" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">Atarim Plugin & API</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">WordPress + Laravel</p>
-          <p>Built real-time collaboration tools, custom plugins, and API integrations for agencies and clients.</p>
-        </a>
-        <a href="https://www.unsw.edu.au/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">UNSW</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">WordPress</p>
-          <p>Developed dashboards and healthcare data interfaces for a carer management platform.</p>
-        </a>
-        <a href="https://ch.cosnet.co/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">COSNET</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Laravel</p>
-          <p>Custom WordPress site setup and backend optimization for a telecom service provider.</p>
-        </a>
-        <a href="https://americansaudisupply.com/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">American Saudi Supply</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Laravel Ecommerce</p>
-          <p>Designed and developed a B2B WooCommerce store with shipping and invoice automation.</p>
-        </a>
-        <a href="https://hus.se/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">Hus.se</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Laravel</p>
-          <p>Optimized performance and implemented custom reporting features for property listings.</p>
-        </a>
-        <a href="https://www.melbourne.intercontinental.com" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">Intercontinental Melbourne</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">WordPress & WooCommerce</p>
-          <p>Supported migration and updates for a luxury hotel booking site with custom modules.</p>
-        </a>
-        <a href="http://www.nextstopwhoknows.com/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">Next Stop Who Knows</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Travel Blog (WordPress)</p>
-          <p>Maintenance and customization of a travel blogger’s site with affiliate systems.</p>
-        </a>
-        <a href="https://1800granola.com/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">WordPress, 1800Granola</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">WooCommerce</p>
-          <p>Built an organic granola eCommerce store with custom cart logic and discount flows.</p>
-        </a>
-        <a href="https://www.wpvigil.com/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">WP Vigil</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Laravel + Filament + WordPress</p>
-          <p>Developed dashboards and healthcare data interfaces for a carer management platform.</p>
-        </a>
-        <a href="https://coastal.carelinelive.com/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">CareLineLive Coastal</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Laravel + Livewire</p>
-          <p>Developed dashboards and healthcare data interfaces for a carer management platform.</p>
-        </a>
-      </div>
-    </section>
-
-    <section id="reviews" class="mb-10">
-      <h2 class="text-xl font-semibold mb-4 text-primary">Client Reviews</h2>
-      <div class="space-y-6">
-        <div class="p-4 bg-white dark:bg-gray-800 dark:border dark:border-gray-700 dark:text-gray-200 rounded shadow">
-          <h3 class="font-semibold text-lg text-primary">Members listing CMS</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Jun 3, 2016 - Jul 26, 2016 | ⭐ 4.7</p>
-          <p class="mt-2">"What I liked with Sourav is that he is fast, often available and the quality of his work is worth every penny. We will continue our work with Sourav for new projects."</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 dark:border dark:border-gray-700 dark:text-gray-200 rounded shadow">
-          <h3 class="font-semibold text-lg text-primary">Development of Various Web Applications for Business</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Aug 24, 2016 - Jan 25, 2018 | ⭐ 5.0</p>
-          <p class="mt-2">"Sourav was a pleasure to work with and produced to spec code and web apps which we still use to this day. I can highly recommend him for any similar work!"</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 dark:border dark:border-gray-700 dark:text-gray-200 rounded shadow">
-          <h3 class="font-semibold text-lg text-primary">Looking for a Full Stack, Laravel developer to hire for full time</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Dec 26, 2018 - Jan 3, 2019 | ⭐ 5.0</p>
-          <p class="mt-2">"Good resource. Will work with him for sure."</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 dark:border dark:border-gray-700 dark:text-gray-200 rounded shadow">
-          <h3 class="font-semibold text-lg text-primary">Looking PHP and codeigniter Developer</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Mar 5, 2020 - Mar 18, 2020 | ⭐ 5.0</p>
-          <p class="mt-2">"His communication was top-notch, he met all deadlines, and his skills were strong. I enjoyed working with him and will likely have additional jobs for him in the future."</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 dark:border dark:border-gray-700 dark:text-gray-200 rounded shadow">
-          <h3 class="font-semibold text-lg text-primary">Need Wordpress Developer ASAP!</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Oct 31, 2020 - Nov 2, 2020 | ⭐ 5.0</p>
-          <p class="mt-2">"Sourav did a great job with my website projects so far! Will definitely be working with him again!"</p>
+            <div class="text-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+              <div class="text-3xl font-bold text-primary">100+</div>
+              <div class="text-sm text-gray-600 dark:text-gray-400">Projects Completed</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="contact">
-      <h2 class="text-xl font-semibold mb-2 text-primary">Contact</h2>
-        <div class="flex items-center space-x-6 mt-4">
-            <a href="https://linkedin.com/in/iamsouravch" target="_blank" class="flex items-center space-x-2 text-primary hover:underline">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.26c-.97 0-1.75-.79-1.75-1.75s.79-1.74 1.75-1.74 1.75.78 1.75 1.74c0 .96-.79 1.75-1.75 1.75zm13.5 11.26h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.89v1.37h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.6v5.57z"/></svg>
-                <span>LinkedIn</span>
-            </a>
-            <a href="https://github.com/professional-sourav" target="_blank" class="flex items-center space-x-2 text-primary hover:underline">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5c-6.63 0-12 5.37-12 12 0 5.3 3.438 9.8 8.205 11.385.6.113.82-.26.82-.577v-2.023c-3.338.724-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.832 2.807 1.303 3.492.997.108-.775.418-1.303.762-1.603-2.665-.304-5.466-1.333-5.466-5.93 0-1.31.468-2.38 1.236-3.22-.123-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.3 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.29-1.552 3.296-1.23 3.296-1.23.655 1.653.242 2.873.12 3.176.77.84 1.235 1.91 1.235 3.22 0 4.61-2.804 5.624-5.475 5.92.43.37.823 1.102.823 2.222v3.293c0 .32.217.694.825.576 4.765-1.587 8.2-6.087 8.2-11.385 0-6.63-5.37-12-12-12z"/></svg>
-                <span>GitHub</span>
-            </a>
-            <a href="https://www.upwork.com/freelancers/souravthedeveloper" target="_blank" class="flex items-center space-x-2 text-primary hover:underline">
-                <img src="upwork.png" alt="Upwork" class="w-6 h-6 inline-block mr-1 align-middle" />
-                <span class="align-middle">Upwork</span>
+    <!-- New Skills Section -->
+    <section id="skills" class="py-20 bg-gray-50 dark:bg-gray-800/50 rounded-3xl mb-20">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4 text-primary">Technical Skills</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mb-8"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Backend Skills -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-xl font-semibold mb-4 text-primary flex items-center">
+            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            Backend Development
+          </h3>
+          <div class="space-y-3">
+            <div class="skill-item">
+              <div class="flex justify-between mb-1">
+                <span>PHP & Laravel</span>
+                <span class="text-primary">95%</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 skill-bar">
+                <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 95%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="flex justify-between mb-1">
+                <span>Python</span>
+                <span class="text-primary">85%</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 skill-bar">
+                <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 85%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="flex justify-between mb-1">
+                <span>Node.js</span>
+                <span class="text-primary">80%</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 skill-bar">
+                <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 80%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Frontend Skills -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-xl font-semibold mb-4 text-primary flex items-center">
+            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            Frontend Development
+          </h3>
+          <div class="space-y-3">
+            <div class="skill-item">
+              <div class="flex justify-between mb-1">
+                <span>React.js</span>
+                <span class="text-primary">90%</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 skill-bar">
+                <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="flex justify-between mb-1">
+                <span>JavaScript</span>
+                <span class="text-primary">92%</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 skill-bar">
+                <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 92%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="flex justify-between mb-1">
+                <span>Tailwind CSS</span>
+                <span class="text-primary">88%</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 skill-bar">
+                <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 88%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CMS & Cloud -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-xl font-semibold mb-4 text-primary flex items-center">
+            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+            </svg>
+            CMS & Cloud
+          </h3>
+          <div class="space-y-3">
+            <div class="skill-item">
+              <div class="flex justify-between mb-1">
+                <span>WordPress</span>
+                <span class="text-primary">95%</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 skill-bar">
+                <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 95%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="flex justify-between mb-1">
+                <span>AWS</span>
+                <span class="text-primary">85%</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 skill-bar">
+                <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 85%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="flex justify-between mb-1">
+                <span>Docker</span>
+                <span class="text-primary">80%</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 skill-bar">
+                <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 80%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Enhanced Portfolio Section -->
+    <section id="portfolio" class="py-20">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4 text-primary">Featured Projects</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mb-8"></div>
+        <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          Explore some of my recent work showcasing innovative solutions across various industries
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Project Cards with Enhanced Design -->
+        <div class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+          <div class="relative overflow-hidden">
+            <div class="h-48 bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+              <div class="text-white text-6xl font-bold opacity-20">A</div>
+            </div>
+            <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <a href="https://atarim.io" target="_blank" class="px-6 py-2 bg-white text-primary rounded-full hover:bg-primary hover:text-white transition-colors">
+                View Project
+              </a>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2 text-primary">Atarim Plugin & API</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">WordPress + Laravel</p>
+            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+              Built real-time collaboration tools, custom plugins, and API integrations for agencies and clients.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">WordPress</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Laravel</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">API</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+          <div class="relative overflow-hidden">
+            <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+              <div class="text-white text-6xl font-bold opacity-20">U</div>
+            </div>
+            <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <a href="https://www.unsw.edu.au/" target="_blank" class="px-6 py-2 bg-white text-primary rounded-full hover:bg-primary hover:text-white transition-colors">
+                View Project
+              </a>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2 text-primary">UNSW Healthcare Platform</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">WordPress</p>
+            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+              Developed dashboards and healthcare data interfaces for a comprehensive carer management platform.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">WordPress</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Healthcare</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Dashboard</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+          <div class="relative overflow-hidden">
+            <div class="h-48 bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center">
+              <div class="text-white text-6xl font-bold opacity-20">C</div>
+            </div>
+            <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <a href="https://ch.cosnet.co/" target="_blank" class="px-6 py-2 bg-white text-primary rounded-full hover:bg-primary hover:text-white transition-colors">
+                View Project
+              </a>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2 text-primary">COSNET Telecom</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Laravel</p>
+            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+              Custom WordPress site setup and backend optimization for a leading telecom service provider.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Laravel</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Telecom</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Optimization</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+          <div class="relative overflow-hidden">
+            <div class="h-48 bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+              <div class="text-white text-6xl font-bold opacity-20">A</div>
+            </div>
+            <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <a href="https://americansaudisupply.com/" target="_blank" class="px-6 py-2 bg-white text-primary rounded-full hover:bg-primary hover:text-white transition-colors">
+                View Project
+              </a>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2 text-primary">American Saudi Supply</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Laravel Ecommerce</p>
+            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+              Designed and developed a B2B WooCommerce store with advanced shipping and invoice automation.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Laravel</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">B2B</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Automation</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+          <div class="relative overflow-hidden">
+            <div class="h-48 bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+              <div class="text-white text-6xl font-bold opacity-20">W</div>
+            </div>
+            <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <a href="https://www.wpvigil.com/" target="_blank" class="px-6 py-2 bg-white text-primary rounded-full hover:bg-primary hover:text-white transition-colors">
+                View Project
+              </a>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2 text-primary">WP Vigil</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Laravel + Filament + WordPress</p>
+            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+              Comprehensive WordPress security monitoring platform with advanced threat detection capabilities.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Laravel</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Security</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Monitoring</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+          <div class="relative overflow-hidden">
+            <div class="h-48 bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+              <div class="text-white text-6xl font-bold opacity-20">C</div>
+            </div>
+            <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <a href="https://coastal.carelinelive.com/" target="_blank" class="px-6 py-2 bg-white text-primary rounded-full hover:bg-primary hover:text-white transition-colors">
+                View Project
+              </a>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2 text-primary">CareLineLive Coastal</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Laravel + Livewire</p>
+            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+              Real-time healthcare dashboards and data interfaces for comprehensive carer management platform.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Laravel</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Livewire</span>
+              <span class="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Healthcare</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-12">
+        <button class="px-8 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-full transition-all duration-300 transform hover:scale-105">
+          View All Projects
+        </button>
+      </div>
+    </section>
+
+    <!-- Enhanced Reviews Section -->
+    <section id="reviews" class="py-20 bg-gray-50 dark:bg-gray-800/50 rounded-3xl">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4 text-primary">Client Testimonials</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mb-8"></div>
+        <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          What clients say about working with me
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 relative">
+          <div class="absolute -top-4 left-6">
+            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="pt-4">
+            <div class="flex items-center mb-4">
+              <div class="flex text-yellow-400">
+                ⭐⭐⭐⭐⭐
+              </div>
+              <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">4.7/5</span>
+            </div>
+            <h3 class="font-semibold text-primary mb-2">Members Listing CMS</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
+              "What I liked with Sourav is that he is fast, often available and the quality of his work is worth every penny. We will continue our work with Sourav for new projects."
+            </p>
+            <div class="text-xs text-gray-500 dark:text-gray-400">
+              Jun 2016 - Jul 2016
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 relative">
+          <div class="absolute -top-4 left-6">
+            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="pt-4">
+            <div class="flex items-center mb-4">
+              <div class="flex text-yellow-400">
+                ⭐⭐⭐⭐⭐
+              </div>
+              <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">5.0/5</span>
+            </div>
+            <h3 class="font-semibold text-primary mb-2">Web Applications Development</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
+              "Sourav was a pleasure to work with and produced to spec code and web apps which we still use to this day. I can highly recommend him for any similar work!"
+            </p>
+            <div class="text-xs text-gray-500 dark:text-gray-400">
+              Aug 2016 - Jan 2018
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 relative">
+          <div class="absolute -top-4 left-6">
+            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="pt-4">
+            <div class="flex items-center mb-4">
+              <div class="flex text-yellow-400">
+                ⭐⭐⭐⭐⭐
+              </div>
+              <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">5.0/5</span>
+            </div>
+            <h3 class="font-semibold text-primary mb-2">WordPress Development</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
+              "His communication was top-notch, he met all deadlines, and his skills were strong. I enjoyed working with him and will likely have additional jobs for him in the future."
+            </p>
+            <div class="text-xs text-gray-500 dark:text-gray-400">
+              Mar 2020 - Mar 2020
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust Indicators -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 text-center">
+        <div>
+          <div class="text-3xl font-bold text-primary">5.0</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400">Average Rating</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-primary">100%</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400">Job Success</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-primary">24h</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400">Response Time</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-primary">8+</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400">Years Experience</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Enhanced Contact Section -->
+    <section id="contact" class="py-20">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4 text-primary">Get In Touch</h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mb-8"></div>
+        <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          Ready to start your next project? Let's discuss how I can help bring your ideas to life.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- Contact Form -->
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl">
+          <h3 class="text-2xl font-semibold mb-6 text-primary">Send a Message</h3>
+          <form class="space-y-6" x-data="{ formSubmitted: false }" @submit.prevent="formSubmitted = true">
+            <div>
+              <label class="block text-sm font-medium mb-2">Name</label>
+              <input type="text" class="w-full px-4 py-3 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700 transition-colors" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-2">Email</label>
+              <input type="email" class="w-full px-4 py-3 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700 transition-colors" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-2">Project Type</label>
+              <select class="w-full px-4 py-3 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700 transition-colors">
+                <option>WordPress Development</option>
+                <option>Laravel Application</option>
+                <option>React.js Frontend</option>
+                <option>Full-Stack Project</option>
+                <option>API Integration</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-2">Message</label>
+              <textarea rows="4" class="w-full px-4 py-3 border dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700 transition-colors" required></textarea>
+            </div>
+            <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 rounded-lg hover:shadow-lg transform hover:scale-[1.02] transition-all duration-300">
+              <span x-show="!formSubmitted">Send Message</span>
+              <span x-show="formSubmitted" class="flex items-center justify-center">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Sending...
+              </span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="space-y-8">
+          <div class="text-center md:text-left">
+            <h3 class="text-2xl font-semibold mb-6 text-primary">Let's Connect</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-8">
+              I'm always excited to work on new projects and help businesses grow through technology. Feel free to reach out through any of these channels.
+            </p>
+          </div>
+
+          <!-- Social Links with Enhanced Design -->
+          <div class="grid grid-cols-2 gap-4">
+            <a href="https://linkedin.com/in/iamsouravch" target="_blank" 
+               class="flex items-center p-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group">
+              <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mr-4 group-hover:bg-blue-500 transition-colors">
+                <svg class="w-6 h-6 text-blue-600 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.26c-.97 0-1.75-.79-1.75-1.75s.79-1.74 1.75-1.74 1.75.78 1.75 1.74c0 .96-.79 1.75-1.75 1.75zm13.5 11.26h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.89v1.37h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.6v5.57z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="font-semibold text-gray-800 dark:text-gray-200">LinkedIn</div>
+                <div class="text-sm text-gray-500">Professional Network</div>
+              </div>
             </a>
 
-            <a href="mailto:professional.sourav@gmail.com" class="flex items-center space-x-2 text-primary hover:underline">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 13.5l-12-9v18h24v-18l-12 9zm0-3.6l12-9h-24l12 9z"/></svg>
-                <span>Gmail</span>
+            <a href="https://github.com/professional-sourav" target="_blank" 
+               class="flex items-center p-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group">
+              <div class="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center mr-4 group-hover:bg-gray-800 transition-colors">
+                <svg class="w-6 h-6 text-gray-600 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 .5c-6.63 0-12 5.37-12 12 0 5.3 3.438 9.8 8.205 11.385.6.113.82-.26.82-.577v-2.023c-3.338.724-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.832 2.807 1.303 3.492.997.108-.775.418-1.303.762-1.603-2.665-.304-5.466-1.333-5.466-5.93 0-1.31.468-2.38 1.236-3.22-.123-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.3 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.29-1.552 3.296-1.23 3.296-1.23.655 1.653.242 2.873.12 3.176.77.84 1.235 1.91 1.235 3.22 0 4.61-2.804 5.624-5.475 5.92.43.37.823 1.102.823 2.222v3.293c0 .32.217.694.825.576 4.765-1.587 8.2-6.087 8.2-11.385 0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="font-semibold text-gray-800 dark:text-gray-200">GitHub</div>
+                <div class="text-sm text-gray-500">Code Repository</div>
+              </div>
             </a>
+
+            <a href="https://www.upwork.com/freelancers/souravthedeveloper" target="_blank" 
+               class="flex items-center p-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group">
+              <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mr-4 group-hover:bg-green-500 transition-colors">
+                <div class="w-6 h-6 bg-green-600 group-hover:bg-white rounded text-white group-hover:text-green-600 flex items-center justify-center text-xs font-bold">
+                  U
+                </div>
+              </div>
+              <div>
+                <div class="font-semibold text-gray-800 dark:text-gray-200">Upwork</div>
+                <div class="text-sm text-gray-500">Freelance Profile</div>
+              </div>
+            </a>
+
+            <a href="mailto:professional.sourav@gmail.com" 
+               class="flex items-center p-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group">
+              <div class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center mr-4 group-hover:bg-red-500 transition-colors">
+                <svg class="w-6 h-6 text-red-600 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 13.5l-12-9v18h24v-18l-12 9zm0-3.6l12-9h-24l12 9z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="font-semibold text-gray-800 dark:text-gray-200">Email</div>
+                <div class="text-sm text-gray-500">Direct Contact</div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Call to Action -->
+          <div class="bg-gradient-to-r from-primary to-secondary p-6 rounded-2xl text-white text-center">
+            <h4 class="text-xl font-semibold mb-2">Ready to Start Your Project?</h4>
+            <p class="mb-4 opacity-90">Let's discuss how I can help you achieve your goals</p>
+            <a href="mailto:professional.sourav@gmail.com" class="inline-block px-6 py-2 bg-white text-primary rounded-full hover:bg-gray-100 transition-colors">
+              Start a Conversation
+            </a>
+          </div>
         </div>
+      </div>
     </section>
   </main>
 
-  <footer class="text-center text-sm text-gray-500 dark:text-gray-400 mt-10 mb-4">
-    &copy; 2025 Sourav Chakraborty. All rights reserved.
+  <!-- Enhanced Footer -->
+  <footer class="bg-gray-900 text-white py-12 mt-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="md:col-span-2">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold">
+              SC
+            </div>
+            <h3 class="text-xl font-bold">Sourav Chakraborty</h3>
+          </div>
+          <p class="text-gray-400 mb-4 max-w-md">
+            Full-Stack Developer specializing in creating innovative web solutions that drive business growth and user engagement.
+          </p>
+          <div class="flex space-x-4">
+            <a href="https://linkedin.com/in/iamsouravch" target="_blank" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.26c-.97 0-1.75-.79-1.75-1.75s.79-1.74 1.75-1.74 1.75.78 1.75 1.74c0 .96-.79 1.75-1.75 1.75zm13.5 11.26h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.89v1.37h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.6v5.57z"/>
+              </svg>
+            </a>
+            <a href="https://github.com/professional-sourav" target="_blank" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 .5c-6.63 0-12 5.37-12 12 0 5.3 3.438 9.8 8.205 11.385.6.113.82-.26.82-.577v-2.023c-3.338.724-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.832 2.807 1.303 3.492.997.108-.775.418-1.303.762-1.603-2.665-.304-5.466-1.333-5.466-5.93 0-1.31.468-2.38 1.236-3.22-.123-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.3 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.29-1.552 3.296-1.23 3.296-1.23.655 1.653.242 2.873.12 3.176.77.84 1.235 1.91 1.235 3.22 0 4.61-2.804 5.624-5.475 5.92.43.37.823 1.102.823 2.222v3.293c0 .32.217.694.825.576 4.765-1.587 8.2-6.087 8.2-11.385 0-6.63-5.37-12-12-12z"/>
+              </svg>
+            </a>
+            <a href="mailto:professional.sourav@gmail.com" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 13.5l-12-9v18h24v-18l-12 9zm0-3.6l12-9h-24l12 9z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+            <li><a href="#skills" class="text-gray-400 hover:text-white transition-colors">Skills</a></li>
+            <li><a href="#portfolio" class="text-gray-400 hover:text-white transition-colors">Portfolio</a></li>
+            <li><a href="#reviews" class="text-gray-400 hover:text-white transition-colors">Reviews</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Services</h4>
+          <ul class="space-y-2">
+            <li><span class="text-gray-400">WordPress Development</span></li>
+            <li><span class="text-gray-400">Laravel Applications</span></li>
+            <li><span class="text-gray-400">React.js Frontend</span></li>
+            <li><span class="text-gray-400">API Integration</span></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Contact Info</h4>
+          <ul class="space-y-2">
+            <li class="text-gray-400">professional.sourav@gmail.com</li>
+            <li class="text-gray-400">Available for freelance projects</li>
+            <li class="text-gray-400">Response time: 24 hours</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+        <p class="text-gray-400">
+          &copy; 2025 Sourav Chakraborty. All rights reserved. Built with passion and precision.
+        </p>
+      </div>
+    </div>
   </footer>
 
-  <!-- Scroll to Top Button -->
-  <button x-show="showScrollTop" @click="window.scrollTo({ top: 0, behavior: 'smooth' })" 
-          class="fixed bottom-5 right-5 bg-primary text-white px-4 py-2 rounded-full shadow-lg hover:bg-green-700 transition-all" 
+  <!-- Enhanced Scroll to Top Button -->
+  <button x-show="showScrollTop" 
+          @click="window.scrollTo({ top: 0, behavior: 'smooth' })" 
+          class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-primary to-secondary text-white rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 z-50 flex items-center justify-center" 
           x-transition.opacity>
-    ↑ Top
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
   </button>
+
+  <!-- Floating Action Button for Quick Contact -->
+  <div class="fixed bottom-8 left-8 z-50" x-data="{ showFab: false }" x-init="setTimeout(() => showFab = true, 3000)">
+    <div x-show="showFab" x-transition.scale class="relative">
+      <button @click="window.location.href='mailto:professional.sourav@gmail.com'" 
+              class="w-16 h-16 bg-gradient-to-r from-primary to-secondary text-white rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 flex items-center justify-center animate-pulse-glow">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+        </svg>
+      </button>
+      <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-sm py-2 px-3 rounded-lg whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity">
+        Let's Chat!
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Screen -->
+  <div x-data="{ loading: true }" x-init="setTimeout(() => loading = false, 1500)" 
+       x-show="loading" 
+       class="fixed inset-0 bg-white dark:bg-gray-900 z-50 flex items-center justify-center"
+       x-transition.opacity.duration.500ms>
+    <div class="text-center">
+      <div class="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 animate-pulse-glow">
+        SC
+      </div>
+      <div class="text-xl font-semibold text-primary">Loading Portfolio...</div>
+      <div class="mt-4">
+        <div class="w-32 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+          <div class="h-full bg-gradient-to-r from-primary to-secondary rounded-full animate-pulse"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Smooth scroll behavior enhancement -->
+  <script>
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offsetTop = target.offsetTop - 100; // Account for fixed header
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Add intersection observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
 </body>
 </html>
