@@ -829,6 +829,9 @@
 
     .float-badge {
       position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       padding: 0.4rem 0.85rem;
       border-radius: 100px;
       font-size: 0.72rem;
@@ -843,6 +846,7 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
       animation: float 4s ease-in-out infinite;
     }
+    .float-badge img { display: block; flex-shrink: 0; }
 
     .float-badge:nth-child(2) { animation-delay: 0.5s; }
     .float-badge:nth-child(3) { animation-delay: 1.0s; }
@@ -1685,12 +1689,12 @@
             />
           </div>
           <!-- Floating skill badges -->
-          <span class="float-badge badge-php">🐘 PHP</span>
-          <span class="float-badge badge-laravel">🔴 Laravel</span>
-          <span class="float-badge badge-wp">🔵 WordPress</span>
-          <span class="float-badge badge-python">🐍 Python</span>
-          <span class="float-badge badge-react">⚛️ React</span>
-          <span class="float-badge badge-aws">☁️ AWS</span>
+          <span class="float-badge badge-php"><img src="https://cdn.simpleicons.org/php/777BB4" width="14" height="14" alt="" aria-hidden="true"> PHP</span>
+          <span class="float-badge badge-laravel"><img src="https://cdn.simpleicons.org/laravel/FF2D20" width="14" height="14" alt="" aria-hidden="true"> Laravel</span>
+          <span class="float-badge badge-wp"><img src="https://cdn.simpleicons.org/wordpress/21759B" width="14" height="14" alt="" aria-hidden="true"> WordPress</span>
+          <span class="float-badge badge-python"><img src="https://cdn.simpleicons.org/python/3776AB" width="14" height="14" alt="" aria-hidden="true"> Python</span>
+          <span class="float-badge badge-react"><img src="https://cdn.simpleicons.org/react/61DAFB" width="14" height="14" alt="" aria-hidden="true"> React</span>
+          <span class="float-badge badge-aws"><img src="https://cdn.simpleicons.org/amazonaws/FF9900" width="14" height="14" alt="" aria-hidden="true"> AWS</span>
         </div>
       </div>
 
@@ -1713,7 +1717,12 @@
 
       <div class="skill-card skill-card-backend reveal reveal-delay-1">
         <div class="skill-card-header">
-          <div class="skill-icon skill-icon-backend" aria-hidden="true">⚙️</div>
+          <div class="skill-icon skill-icon-backend" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/>
+              <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+            </svg>
+          </div>
           <div class="skill-header-text">
             <div class="skill-card-title">Backend</div>
             <div class="skill-card-sub">Server-side &amp; APIs</div>
@@ -1721,7 +1730,7 @@
           </div>
         </div>
         <div class="skill-pills">
-          <span class="pill pill-laravel-hero">🔴 Laravel</span>
+          <span class="pill pill-laravel-hero"><img src="https://cdn.simpleicons.org/laravel/FF2D20" width="12" height="12" alt="" aria-hidden="true" style="flex-shrink:0"> Laravel</span>
           <span class="pill pill-laravel-hero">Multi-Tenant SaaS</span>
           <span class="pill pill-indigo">PHP</span>
           <span class="pill pill-indigo">Python</span>
@@ -1734,17 +1743,22 @@
 
       <div class="skill-card skill-card-frontend reveal reveal-delay-2">
         <div class="skill-card-header">
-          <div class="skill-icon skill-icon-frontend" aria-hidden="true">🎨</div>
+          <div class="skill-icon skill-icon-frontend" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
           <div class="skill-header-text">
             <div class="skill-card-title">Frontend</div>
             <div class="skill-card-sub">UI &amp; interactivity</div>
-            <span class="react-badge">⚛️ React · 3 yrs</span>
+            <span class="react-badge"><img src="https://cdn.simpleicons.org/react/61DAFB" width="11" height="11" alt="" aria-hidden="true" style="flex-shrink:0"> React · 3 yrs</span>
           </div>
         </div>
         <div class="skill-pills">
           <span class="pill pill-cyan">JavaScript</span>
           <span class="pill pill-cyan">Vue.js</span>
-          <span class="pill pill-react-hero">⚛️ React.js <span class="pill-years">3 yrs</span></span>
+          <span class="pill pill-react-hero"><img src="https://cdn.simpleicons.org/react/61DAFB" width="12" height="12" alt="" aria-hidden="true" style="flex-shrink:0"> React.js <span class="pill-years">3 yrs</span></span>
           <span class="pill pill-cyan">Next.js</span>
           <span class="pill pill-cyan">Tailwind CSS</span>
           <span class="pill pill-cyan">Livewire</span>
@@ -1754,7 +1768,12 @@
 
       <div class="skill-card skill-card-cms reveal reveal-delay-3">
         <div class="skill-card-header">
-          <div class="skill-icon skill-icon-cms" aria-hidden="true">🛒</div>
+          <div class="skill-icon skill-icon-cms" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d8b4fe" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
+            </svg>
+          </div>
           <div class="skill-header-text">
             <div class="skill-card-title">CMS &amp; E-Commerce</div>
             <div class="skill-card-sub">Content &amp; commerce</div>
@@ -1772,7 +1791,11 @@
 
       <div class="skill-card skill-card-devops reveal reveal-delay-4">
         <div class="skill-card-header">
-          <div class="skill-icon skill-icon-devops" aria-hidden="true">☁️</div>
+          <div class="skill-icon skill-icon-devops" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fdba74" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+            </svg>
+          </div>
           <div class="skill-header-text">
             <div class="skill-card-title">DevOps &amp; Cloud</div>
             <div class="skill-card-sub">Infrastructure &amp; CI/CD</div>
@@ -1810,7 +1833,7 @@
           I specialise in <strong style="color:var(--text-primary)">Laravel</strong> and <strong style="color:var(--text-primary)">Filament</strong> — building robust backends, rich admin panels, and production-grade SaaS products. I've also shipped a full <strong style="color:var(--text-primary)">multi-tenant SaaS</strong> (WP Vigil), giving me hands-on experience with tenant isolation, per-tenant config, and scalable architecture.
         </p>
         <div class="laravel-pillrow laravel-feat-pills">
-          <span class="pill pill-laravel-hero">🔴 Laravel</span>
+          <span class="pill pill-laravel-hero"><img src="https://cdn.simpleicons.org/laravel/FF2D20" width="12" height="12" alt="" aria-hidden="true" style="flex-shrink:0"> Laravel</span>
           <span class="pill pill-laravel-hero">Filament Admin</span>
           <span class="pill pill-indigo">Livewire</span>
           <span class="pill pill-indigo">Laravel Sanctum</span>
@@ -2178,8 +2201,8 @@
           <a href="https://www.upwork.com/freelancers/souravthedeveloper" target="_blank" rel="noopener noreferrer"
              class="social-card upwork" role="listitem" aria-label="Upwork — souravthedeveloper">
             <div class="social-icon" style="background:rgba(20,163,84,0.12);" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
-                <text x="4" y="24" font-size="22" font-weight="900" fill="#14a354" font-family="Arial,sans-serif">U</text>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#14a354">
+                <path d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-2.539 0-4.51 1.649-5.31 4.366-1.22-1.834-2.148-4.036-2.687-5.892H7.828v7.112c-.002 1.406-1.141 2.546-2.547 2.546-1.405 0-2.543-1.14-2.543-2.546V3.492H0v7.112c0 2.914 2.37 5.303 5.281 5.303 2.913 0 5.283-2.389 5.283-5.303v-1.19c.529 1.107 1.182 2.229 1.974 3.221l-1.673 7.873h2.797l1.213-5.71c1.063.679 2.285 1.109 3.686 1.109 3 0 5.439-2.452 5.439-5.45 0-3-2.439-5.452-5.439-5.452z"/>
               </svg>
             </div>
             <div>
@@ -2267,8 +2290,8 @@
         </a>
         <a href="https://www.upwork.com/freelancers/souravthedeveloper" target="_blank" rel="noopener noreferrer"
            class="footer-social-link" aria-label="Upwork">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <text y="18" font-size="14" font-weight="900" fill="currentColor" font-family="Arial,sans-serif">U</text>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-2.539 0-4.51 1.649-5.31 4.366-1.22-1.834-2.148-4.036-2.687-5.892H7.828v7.112c-.002 1.406-1.141 2.546-2.547 2.546-1.405 0-2.543-1.14-2.543-2.546V3.492H0v7.112c0 2.914 2.37 5.303 5.281 5.303 2.913 0 5.283-2.389 5.283-5.303v-1.19c.529 1.107 1.182 2.229 1.974 3.221l-1.673 7.873h2.797l1.213-5.71c1.063.679 2.285 1.109 3.686 1.109 3 0 5.439-2.452 5.439-5.45 0-3-2.439-5.452-5.439-5.452z"/>
           </svg>
         </a>
         <a href="mailto:professional.sourav@gmail.com"
