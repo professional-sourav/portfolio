@@ -667,18 +667,34 @@
     .skills-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: var(--space-md);
+      gap: 1.5rem;
     }
 
     .skill-card {
       background: var(--bg-card);
       border: 1px solid var(--border-card);
       border-radius: var(--radius-lg);
-      padding: var(--space-lg);
+      padding: 1.75rem;
       transition: all var(--transition);
       position: relative;
       overflow: hidden;
     }
+
+    /* Colored top accent line per category */
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      opacity: 0.7;
+      transition: opacity var(--transition);
+    }
+    .skill-card:hover::before { opacity: 1; }
+    .skill-card-backend::before  { background: linear-gradient(90deg, #6366f1, #8b5cf6); }
+    .skill-card-frontend::before { background: linear-gradient(90deg, #06b6d4, #3b82f6); }
+    .skill-card-cms::before      { background: linear-gradient(90deg, #a855f7, #ec4899); }
+    .skill-card-devops::before   { background: linear-gradient(90deg, #f97316, #eab308); }
 
     .skill-card::after {
       content: '';
@@ -692,33 +708,38 @@
     }
 
     .skill-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(99,102,241,0.35);
-      box-shadow: var(--glow-indigo);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     }
-    .skill-card:hover::after { opacity: 0.04; }
+    .skill-card-backend:hover  { border-color: rgba(99,102,241,0.4); box-shadow: 0 20px 40px rgba(99,102,241,0.12); }
+    .skill-card-frontend:hover { border-color: rgba(6,182,212,0.4);  box-shadow: 0 20px 40px rgba(6,182,212,0.12); }
+    .skill-card-cms:hover      { border-color: rgba(168,85,247,0.4); box-shadow: 0 20px 40px rgba(168,85,247,0.12); }
+    .skill-card-devops:hover   { border-color: rgba(249,115,22,0.4); box-shadow: 0 20px 40px rgba(249,115,22,0.12); }
+    .skill-card:hover::after { opacity: 0.03; }
     .skill-card > * { position: relative; z-index: 1; }
 
     .skill-card-header {
       display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      margin-bottom: var(--space-md);
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
     }
 
     .skill-icon {
-      width: 44px; height: 44px;
+      width: 48px; height: 48px;
       border-radius: var(--radius-md);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       flex-shrink: 0;
     }
-    .skill-icon-backend  { background: rgba(99,102,241,0.15); }
-    .skill-icon-frontend { background: rgba(6,182,212,0.12); }
-    .skill-icon-cms      { background: rgba(168,85,247,0.12); }
-    .skill-icon-devops   { background: rgba(249,115,22,0.12); }
+    .skill-icon-backend  { background: rgba(99,102,241,0.18); box-shadow: 0 0 0 1px rgba(99,102,241,0.2); }
+    .skill-icon-frontend { background: rgba(6,182,212,0.15);  box-shadow: 0 0 0 1px rgba(6,182,212,0.2); }
+    .skill-icon-cms      { background: rgba(168,85,247,0.15); box-shadow: 0 0 0 1px rgba(168,85,247,0.2); }
+    .skill-icon-devops   { background: rgba(249,115,22,0.15); box-shadow: 0 0 0 1px rgba(249,115,22,0.2); }
+
+    .skill-header-text { flex: 1; min-width: 0; }
 
     /* Laravel hero pill */
     .pill-laravel-hero {
@@ -729,28 +750,25 @@
       font-weight: 700;
     }
 
-    /* Laravel "Core Specialty" badge on skill card header */
+    /* Laravel "Core Specialty" badge — sits below the subtitle */
     .laravel-badge {
-      margin-left: auto;
-      font-size: 0.65rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-top: 0.4rem;
+      font-size: 0.62rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      background: linear-gradient(135deg, #ef4444, #6366f1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(99,102,241,0.15));
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #fca5a5;
       white-space: nowrap;
     }
 
-    /* Laravel card gets a stronger left border accent */
-    .skill-card-laravel {
-      border-left: 2px solid rgba(239,68,68,0.5);
-    }
-    .skill-card-laravel:hover {
-      border-color: rgba(239,68,68,0.5);
-      box-shadow: 0 0 30px rgba(239,68,68,0.15), var(--glow-indigo);
-    }
+    .skill-card-laravel { /* alias kept, unused now */ }
 
     /* ---- Laravel Spotlight strip ---- */
     #laravel-spotlight {
@@ -1395,14 +1413,14 @@
 
     <div class="skills-grid">
 
-      <div class="skill-card skill-card-laravel reveal reveal-delay-1">
+      <div class="skill-card skill-card-backend reveal reveal-delay-1">
         <div class="skill-card-header">
           <div class="skill-icon skill-icon-backend" aria-hidden="true">⚙️</div>
-          <div>
+          <div class="skill-header-text">
             <div class="skill-card-title">Backend</div>
             <div class="skill-card-sub">Server-side &amp; APIs</div>
+            <span class="laravel-badge">★ Core Specialty</span>
           </div>
-          <span class="laravel-badge">★ Core Specialty</span>
         </div>
         <div class="skill-pills">
           <span class="pill pill-laravel-hero">🔴 Laravel</span>
@@ -1416,10 +1434,10 @@
         </div>
       </div>
 
-      <div class="skill-card reveal reveal-delay-2">
+      <div class="skill-card skill-card-frontend reveal reveal-delay-2">
         <div class="skill-card-header">
           <div class="skill-icon skill-icon-frontend" aria-hidden="true">🎨</div>
-          <div>
+          <div class="skill-header-text">
             <div class="skill-card-title">Frontend</div>
             <div class="skill-card-sub">UI &amp; interactivity</div>
           </div>
@@ -1435,10 +1453,10 @@
         </div>
       </div>
 
-      <div class="skill-card reveal reveal-delay-3">
+      <div class="skill-card skill-card-cms reveal reveal-delay-3">
         <div class="skill-card-header">
           <div class="skill-icon skill-icon-cms" aria-hidden="true">🛒</div>
-          <div>
+          <div class="skill-header-text">
             <div class="skill-card-title">CMS &amp; E-Commerce</div>
             <div class="skill-card-sub">Content &amp; commerce</div>
           </div>
@@ -1453,10 +1471,10 @@
         </div>
       </div>
 
-      <div class="skill-card reveal reveal-delay-4">
+      <div class="skill-card skill-card-devops reveal reveal-delay-4">
         <div class="skill-card-header">
           <div class="skill-icon skill-icon-devops" aria-hidden="true">☁️</div>
-          <div>
+          <div class="skill-header-text">
             <div class="skill-card-title">DevOps &amp; Cloud</div>
             <div class="skill-card-sub">Infrastructure &amp; CI/CD</div>
           </div>
