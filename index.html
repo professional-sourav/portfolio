@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Sourav Chakraborty — Full-Stack Developer with 8+ years experience in Laravel, WordPress, PHP, Python, and cloud infrastructure." />
-  <title>Sourav Chakraborty — Full-Stack Developer</title>
+  <meta name="description" content="Sourav Chakraborty — Laravel Specialist & Full-Stack Developer with 8+ years building multi-tenant SaaS, high-traffic web apps, and custom APIs." />
+  <title>Sourav Chakraborty — Laravel Specialist & Full-Stack Developer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -720,6 +720,184 @@
     .skill-icon-cms      { background: rgba(168,85,247,0.12); }
     .skill-icon-devops   { background: rgba(249,115,22,0.12); }
 
+    /* Laravel hero pill */
+    .pill-laravel-hero {
+      background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(99,102,241,0.2));
+      color: #fca5a5;
+      border: 1px solid rgba(239,68,68,0.35);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* Laravel "Core Specialty" badge on skill card header */
+    .laravel-badge {
+      margin-left: auto;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ef4444, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      white-space: nowrap;
+    }
+
+    /* Laravel card gets a stronger left border accent */
+    .skill-card-laravel {
+      border-left: 2px solid rgba(239,68,68,0.5);
+    }
+    .skill-card-laravel:hover {
+      border-color: rgba(239,68,68,0.5);
+      box-shadow: 0 0 30px rgba(239,68,68,0.15), var(--glow-indigo);
+    }
+
+    /* ---- Laravel Spotlight strip ---- */
+    #laravel-spotlight {
+      background: var(--bg-primary);
+      padding-block: var(--space-xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #laravel-spotlight::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg,
+        rgba(239,68,68,0.05) 0%,
+        rgba(99,102,241,0.08) 50%,
+        rgba(6,182,212,0.05) 100%);
+      pointer-events: none;
+    }
+
+    #laravel-spotlight::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(239,68,68,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .laravel-strip {
+      position: relative;
+      z-index: 1;
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: var(--radius-xl);
+      background: rgba(19,19,31,0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: var(--space-xl) var(--space-lg);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+
+    .laravel-strip-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fca5a5;
+      margin-bottom: 0.75rem;
+    }
+
+    .laravel-strip-label::before {
+      content: '';
+      display: inline-block;
+      width: 20px; height: 2px;
+      background: linear-gradient(90deg, #ef4444, #6366f1);
+      border-radius: 2px;
+    }
+
+    .laravel-strip-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .laravel-strip-heading span {
+      background: linear-gradient(135deg, #ef4444, #f97316, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .laravel-strip-body {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      max-width: 520px;
+    }
+
+    .laravel-pillrow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: var(--space-md);
+    }
+
+    .laravel-feat-pills .pill {
+      font-size: 0.78rem;
+      padding: 0.35rem 0.9rem;
+    }
+
+    .laravel-stats-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm);
+    }
+
+    .laravel-stat-card {
+      background: rgba(239,68,68,0.06);
+      border: 1px solid rgba(239,68,68,0.15);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      transition: all var(--transition);
+    }
+
+    .laravel-stat-card:hover {
+      border-color: rgba(239,68,68,0.3);
+      background: rgba(239,68,68,0.1);
+      transform: translateY(-3px);
+    }
+
+    .laravel-stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ef4444, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .laravel-stat-label {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    @media (min-width: 768px) {
+      .laravel-strip { grid-template-columns: 1fr 1fr; }
+      .laravel-stats-col { grid-template-columns: 1fr 1fr; }
+    }
+
     .skill-card-title { font-family:'Space Grotesk',sans-serif; font-size:1.05rem; font-weight:700; color:var(--text-primary); }
     .skill-card-sub   { font-size:0.75rem; color:var(--text-muted); margin-top:0.15rem; }
 
@@ -1135,7 +1313,8 @@
         </div>
 
         <p class="hero-bio">
-          8+ years building <strong>high-traffic web apps</strong>, SaaS platforms, and custom APIs.
+          8+ years building <strong>high-traffic web apps</strong>, SaaS platforms, and scalable APIs.
+          Deep specialist in <strong>Laravel &amp; Filament</strong> — including a multi-tenant SaaS.
           Core stack: <strong>PHP · Laravel · WordPress · Python · Node.js</strong>
         </p>
 
@@ -1216,17 +1395,19 @@
 
     <div class="skills-grid">
 
-      <div class="skill-card reveal reveal-delay-1">
+      <div class="skill-card skill-card-laravel reveal reveal-delay-1">
         <div class="skill-card-header">
           <div class="skill-icon skill-icon-backend" aria-hidden="true">⚙️</div>
           <div>
             <div class="skill-card-title">Backend</div>
             <div class="skill-card-sub">Server-side &amp; APIs</div>
           </div>
+          <span class="laravel-badge">★ Core Specialty</span>
         </div>
         <div class="skill-pills">
+          <span class="pill pill-laravel-hero">🔴 Laravel</span>
+          <span class="pill pill-laravel-hero">Multi-Tenant SaaS</span>
           <span class="pill pill-indigo">PHP</span>
-          <span class="pill pill-indigo">Laravel</span>
           <span class="pill pill-indigo">Python</span>
           <span class="pill pill-indigo">Node.js</span>
           <span class="pill pill-indigo">REST APIs</span>
@@ -1288,6 +1469,60 @@
           <span class="pill pill-orange">Docker</span>
           <span class="pill pill-orange">GitHub Actions</span>
           <span class="pill pill-orange">Redis</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LARAVEL SPOTLIGHT
+============================================================ -->
+<section id="laravel-spotlight" aria-labelledby="laravel-heading">
+  <div class="container">
+    <div class="laravel-strip reveal">
+
+      <!-- Left: copy -->
+      <div>
+        <div class="laravel-strip-label">Laravel &amp; Filament Specialist</div>
+        <h2 class="laravel-strip-heading" id="laravel-heading">
+          Laravel &amp; Filament<br><span>are my core.</span>
+        </h2>
+        <p class="laravel-strip-body">
+          I specialise in <strong style="color:var(--text-primary)">Laravel</strong> and <strong style="color:var(--text-primary)">Filament</strong> — building robust backends, rich admin panels, and production-grade SaaS products. I've also shipped a full <strong style="color:var(--text-primary)">multi-tenant SaaS</strong> (WP Vigil), giving me hands-on experience with tenant isolation, per-tenant config, and scalable architecture.
+        </p>
+        <div class="laravel-pillrow laravel-feat-pills">
+          <span class="pill pill-laravel-hero">🔴 Laravel</span>
+          <span class="pill pill-laravel-hero">Filament Admin</span>
+          <span class="pill pill-indigo">Livewire</span>
+          <span class="pill pill-indigo">Laravel Sanctum</span>
+          <span class="pill pill-indigo">Queues &amp; Jobs</span>
+          <span class="pill pill-indigo">Eloquent ORM</span>
+          <span class="pill pill-cyan">REST APIs</span>
+          <span class="pill pill-cyan">Laravel Nova</span>
+          <span class="pill pill-orange">Redis / Horizon</span>
+          <span class="pill pill-orange">Multi-Tenant SaaS</span>
+        </div>
+      </div>
+
+      <!-- Right: stat cards -->
+      <div class="laravel-stats-col">
+        <div class="laravel-stat-card">
+          <span class="laravel-stat-num">8+</span>
+          <span class="laravel-stat-label">Years with Laravel &amp; PHP</span>
+        </div>
+        <div class="laravel-stat-card">
+          <span class="laravel-stat-num">10+</span>
+          <span class="laravel-stat-label">Laravel projects delivered</span>
+        </div>
+        <div class="laravel-stat-card">
+          <span class="laravel-stat-num">★</span>
+          <span class="laravel-stat-label">Filament admin panels &amp; custom resources</span>
+        </div>
+        <div class="laravel-stat-card">
+          <span class="laravel-stat-num">1</span>
+          <span class="laravel-stat-label">Multi-tenant SaaS shipped (WP Vigil)</span>
         </div>
       </div>
 
@@ -1425,7 +1660,7 @@
             <span class="pill pill-indigo">Laravel</span>
             <span class="pill pill-cyan">Filament</span>
           </div>
-          <p class="project-desc">SaaS dashboard for real-time WordPress site monitoring.</p>
+          <p class="project-desc">Multi-tenant SaaS dashboard for real-time WordPress site monitoring — per-tenant data isolation &amp; Filament admin.</p>
           <a href="https://www.wpvigil.com/" target="_blank" rel="noopener noreferrer" class="project-link">
             Visit Site <span class="arrow">→</span>
           </a>
@@ -1440,7 +1675,7 @@
             <span class="pill pill-indigo">Laravel</span>
             <span class="pill pill-cyan">Livewire</span>
           </div>
-          <p class="project-desc">Healthcare dashboards for home care provider management.</p>
+          <p class="project-desc">Multi-tenant Laravel + Livewire SaaS for home care — real-time dashboards with per-organisation data boundaries.</p>
           <a href="https://coastal.carelinelive.com/" target="_blank" rel="noopener noreferrer" class="project-link">
             Visit Site <span class="arrow">→</span>
           </a>
@@ -1797,7 +2032,7 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
 
   /* ---- TYPEWRITER ---- */
-  const phrases = ['Laravel Specialist', 'WordPress Expert', 'SaaS Builder', 'API Architect'];
+  const phrases = ['Laravel Specialist', 'Filament Expert', 'WordPress Expert', 'API Architect'];
   const twEl = document.getElementById('typewriter-text');
   let pi = 0, ci = 0, deleting = false;
 
