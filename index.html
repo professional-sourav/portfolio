@@ -1,206 +1,1901 @@
 <!DOCTYPE html>
-<html lang="en" x-data="{ dark: false, showScrollTop: false }" x-init="window.addEventListener('scroll', () => { showScrollTop = window.scrollY > 300 })" :class="{ 'dark': dark }">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sourav Chakraborty - Portfolio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/alpinejs" defer></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            primary: '#108a00'
-          }
-        }
-      }
+  <meta name="description" content="Sourav Chakraborty — Full-Stack Developer with 8+ years experience in Laravel, WordPress, PHP, Python, and cloud infrastructure." />
+  <title>Sourav Chakraborty — Full-Stack Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       CSS CUSTOM PROPERTIES
+    ============================================================ */
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #0f0f1a;
+      --bg-card: #13131f;
+      --bg-card-hover: #161625;
+      --accent-primary: #6366f1;
+      --accent-secondary: #06b6d4;
+      --accent-gradient: linear-gradient(135deg, #6366f1, #06b6d4);
+      --accent-gradient-rev: linear-gradient(135deg, #06b6d4, #6366f1);
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #475569;
+      --border-subtle: rgba(99, 102, 241, 0.15);
+      --border-card: rgba(255, 255, 255, 0.06);
+      --glow-indigo: 0 0 30px rgba(99, 102, 241, 0.3);
+      --glow-cyan: 0 0 30px rgba(6, 182, 212, 0.3);
+      --glow-indigo-strong: 0 0 50px rgba(99, 102, 241, 0.45);
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --space-xs: 0.5rem;
+      --space-sm: 1rem;
+      --space-md: 1.5rem;
+      --space-lg: 2.5rem;
+      --space-xl: 4rem;
+      --space-2xl: 6rem;
+      --nav-h: 72px;
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.45s cubic-bezier(0.4, 0, 0.2, 1);
     }
-  </script>
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; line-height: 1.15; }
+
+    a { color: inherit; text-decoration: none; }
+
+    img { display: block; max-width: 100%; }
+
+    ul { list-style: none; }
+
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    ::selection { background: rgba(99, 102, 241, 0.35); color: var(--text-primary); }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ============================================================
+       SCROLLBAR
+    ============================================================ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.4); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+
+    /* ============================================================
+       UTILITY
+    ============================================================ */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-inline: var(--space-md);
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-secondary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 2px;
+      background: var(--accent-secondary);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+
+    .gradient-text {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.28rem 0.7rem;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .pill-indigo  { background: rgba(99,102,241,0.15);  color: #a5b4fc; border: 1px solid rgba(99,102,241,0.25); }
+    .pill-cyan    { background: rgba(6,182,212,0.12);   color: #67e8f9; border: 1px solid rgba(6,182,212,0.22); }
+    .pill-green   { background: rgba(34,197,94,0.12);   color: #86efac; border: 1px solid rgba(34,197,94,0.22); }
+    .pill-purple  { background: rgba(168,85,247,0.12);  color: #d8b4fe; border: 1px solid rgba(168,85,247,0.22); }
+    .pill-orange  { background: rgba(249,115,22,0.12);  color: #fdba74; border: 1px solid rgba(249,115,22,0.22); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all var(--transition);
+    }
+
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(99,102,241,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(99,102,241,0.5); }
+
+    .btn-outline {
+      border: 1.5px solid rgba(99,102,241,0.5);
+      color: var(--text-primary);
+      background: transparent;
+    }
+    .btn-outline:hover { border-color: var(--accent-primary); background: rgba(99,102,241,0.1); transform: translateY(-2px); }
+
+    /* ============================================================
+       SCROLL REVEAL
+    ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s cubic-bezier(0.4,0,0.2,1), transform 0.65s cubic-bezier(0.4,0,0.2,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      transition: all var(--transition);
+    }
+
+    #navbar.scrolled {
+      background: rgba(10,10,15,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    }
+
+    #navbar.hidden { transform: translateY(-100%); }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-inline: var(--space-md);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text-primary);
+    }
+
+    .nav-logo-badge {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: var(--accent-gradient);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(99,102,241,0.4);
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color var(--transition);
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent-gradient);
+      border-radius: 2px;
+      transition: width var(--transition);
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+    .btn-hire {
+      position: relative;
+      padding: 0.6rem 1.4rem;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      background: transparent;
+      transition: all var(--transition);
+      overflow: hidden;
+    }
+
+    .btn-hire::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.5px;
+      background: var(--accent-gradient);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .btn-hire::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: opacity var(--transition);
+      border-radius: inherit;
+    }
+
+    .btn-hire:hover::after { opacity: 1; }
+    .btn-hire span { position: relative; z-index: 1; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+      border-radius: var(--radius-sm);
+      transition: background var(--transition);
+    }
+    .hamburger:hover { background: rgba(255,255,255,0.06); }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: var(--nav-h); right: -100%;
+      width: min(320px, 100vw);
+      height: calc(100vh - var(--nav-h));
+      background: rgba(13,13,26,0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-left: 1px solid var(--border-subtle);
+      z-index: 999;
+      transition: right var(--transition-slow);
+      padding: var(--space-lg) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .mobile-drawer.open { right: 0; }
+
+    .mobile-drawer a {
+      display: block;
+      padding: 0.9rem 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-card);
+      transition: color var(--transition);
+    }
+    .mobile-drawer a:hover { color: var(--text-primary); }
+
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition);
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -150px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      padding-block: var(--space-xl);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 1rem;
+      border-radius: 100px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.25);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #86efac;
+      margin-bottom: var(--space-sm);
+      opacity: 0;
+      animation: fadeSlideUp 0.6s 0.2s forwards;
+    }
+
+    .pulse-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .pulse-dot::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: rgba(34,197,94,0.4);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.6); opacity: 0; }
+    }
+
+    .hero-h1 {
+      font-size: clamp(2.6rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+      margin-bottom: var(--space-sm);
+      opacity: 0;
+      animation: fadeSlideUp 0.6s 0.35s forwards;
+    }
+
+    .hero-typewriter-wrap {
+      font-size: clamp(1.15rem, 3vw, 1.75rem);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-md);
+      min-height: 2.2rem;
+      opacity: 0;
+      animation: fadeSlideUp 0.6s 0.5s forwards;
+    }
+
+    #typewriter-text {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.1em;
+      background: var(--accent-primary);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 0.9s infinite;
+    }
+
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+    .hero-bio {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      max-width: 520px;
+      margin-bottom: var(--space-lg);
+      opacity: 0;
+      animation: fadeSlideUp 0.6s 0.65s forwards;
+    }
+    .hero-bio strong { color: var(--text-primary); font-weight: 500; }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      opacity: 0;
+      animation: fadeSlideUp 0.6s 0.8s forwards;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-lg);
+      opacity: 0;
+      animation: fadeSlideUp 0.6s 0.95s forwards;
+    }
+
+    .stat-item { display: flex; flex-direction: column; }
+
+    .stat-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 0.2rem;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 40px;
+      background: var(--border-subtle);
+      align-self: center;
+    }
+
+    /* Photo */
+    .hero-photo-col {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      opacity: 0;
+      animation: fadeIn 0.8s 0.5s forwards;
+    }
+
+    .photo-ring-wrap {
+      position: relative;
+      width: 280px;
+      height: 280px;
+    }
+
+    .photo-ring {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #6366f1, #06b6d4, #6366f1);
+      animation: spin 6s linear infinite;
+      z-index: 0;
+    }
+
+    .photo-ring::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border-radius: 50%;
+      background: var(--bg-primary);
+    }
+
+    @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+    .photo-inner {
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      overflow: hidden;
+      z-index: 1;
+      background: var(--bg-card);
+    }
+
+    .photo-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .float-badge {
+      position: absolute;
+      padding: 0.4rem 0.85rem;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(19,19,31,0.88);
+      color: var(--text-primary);
+      white-space: nowrap;
+      z-index: 2;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .float-badge:nth-child(2) { animation-delay: 0.5s; }
+    .float-badge:nth-child(3) { animation-delay: 1.0s; }
+    .float-badge:nth-child(4) { animation-delay: 1.5s; }
+    .float-badge:nth-child(5) { animation-delay: 2.0s; }
+    .float-badge:nth-child(6) { animation-delay: 0.75s; }
+
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+    .badge-php    { top: 6%;   left: -18%; }
+    .badge-laravel { top: 36%; left: -24%; }
+    .badge-wp     { top: 66%; left: -14%; }
+    .badge-python { top: 15%; right: -22%; }
+    .badge-aws    { top: 66%; right: -16%; }
+
+    @keyframes fadeSlideUp {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    /* ============================================================
+       SECTION SHARED
+    ============================================================ */
+    section { padding-block: var(--space-2xl); }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .divider {
+      width: 60px; height: 4px;
+      border-radius: 4px;
+      background: var(--accent-gradient);
+      margin: 1rem auto 0;
+    }
+
+    /* ============================================================
+       SKILLS
+    ============================================================ */
+    #skills {
+      background: var(--bg-secondary);
+      position: relative;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: opacity var(--transition);
+      z-index: 0;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(99,102,241,0.35);
+      box-shadow: var(--glow-indigo);
+    }
+    .skill-card:hover::after { opacity: 0.04; }
+    .skill-card > * { position: relative; z-index: 1; }
+
+    .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .skill-icon {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .skill-icon-backend  { background: rgba(99,102,241,0.15); }
+    .skill-icon-frontend { background: rgba(6,182,212,0.12); }
+    .skill-icon-cms      { background: rgba(168,85,247,0.12); }
+    .skill-icon-devops   { background: rgba(249,115,22,0.12); }
+
+    .skill-card-title { font-family:'Space Grotesk',sans-serif; font-size:1.05rem; font-weight:700; color:var(--text-primary); }
+    .skill-card-sub   { font-size:0.75rem; color:var(--text-muted); margin-top:0.15rem; }
+
+    .skill-pills { display:flex; flex-wrap:wrap; gap:0.5rem; }
+
+    /* ============================================================
+       PORTFOLIO
+    ============================================================ */
+    #portfolio { background: var(--bg-primary); }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      transition: all var(--transition);
+    }
+    .filter-btn:hover { color:var(--text-primary); border-color:rgba(99,102,241,0.35); }
+    .filter-btn.active {
+      background: var(--accent-gradient);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 15px rgba(99,102,241,0.35);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(99,102,241,0.3);
+      box-shadow: var(--glow-indigo);
+    }
+    .project-card.hidden { display: none; }
+
+    .project-bar { height: 4px; width: 100%; }
+
+    .project-body { padding: var(--space-md); flex:1; display:flex; flex-direction:column; }
+
+    .project-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-sm);
+      flex: 1;
+      line-height: 1.6;
+    }
+
+    .project-pills { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:var(--space-sm); }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-secondary);
+      transition: all var(--transition);
+      margin-top: auto;
+      align-self: flex-start;
+    }
+    .project-link .arrow { transition: transform var(--transition); display:inline-block; }
+    .project-link:hover { color: #67e8f9; }
+    .project-link:hover .arrow { transform: translateX(4px); }
+
+    /* ============================================================
+       REVIEWS
+    ============================================================ */
+    #reviews { background: var(--bg-secondary); }
+
+    .reviews-grid { display:grid; grid-template-columns:1fr; gap:var(--space-md); }
+
+    .review-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+    .review-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99,102,241,0.25);
+      box-shadow: var(--glow-indigo);
+    }
+
+    .review-quote-bg {
+      position: absolute;
+      top: -10px; right: 16px;
+      font-size: 7rem;
+      font-family: Georgia, serif;
+      color: rgba(99,102,241,0.07);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .review-stars { display:flex; gap:3px; margin-bottom:var(--space-sm); align-items:center; }
+
+    .review-text {
+      font-style: italic;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      font-size: 0.9rem;
+      margin-bottom: var(--space-md);
+      position: relative;
+      z-index: 1;
+    }
+
+    .review-meta {
+      border-top: 1px solid var(--border-card);
+      padding-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .review-project { font-family:'Space Grotesk',sans-serif; font-size:0.88rem; font-weight:700; color:var(--text-primary); }
+    .review-date    { font-size:0.75rem; color:var(--text-muted); }
+
+    /* ============================================================
+       CONTACT
+    ============================================================ */
+    #contact { background: var(--bg-primary); position:relative; overflow:hidden; }
+
+    #contact::after {
+      content:'';
+      position:absolute;
+      bottom:-200px; right:-200px;
+      width:600px; height:600px;
+      background:radial-gradient(circle,rgba(99,102,241,0.08),transparent 70%);
+      pointer-events:none;
+    }
+
+    .contact-grid { display:grid; grid-template-columns:1fr; gap:var(--space-xl); position:relative; z-index:1; }
+
+    .contact-subtitle { font-size:1.05rem; color:var(--text-secondary); margin-top:0.75rem; margin-bottom:var(--space-lg); }
+
+    .social-cards { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-sm); }
+
+    .social-card {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      transition: all var(--transition);
+    }
+    .social-card:hover { transform: translateY(-3px); }
+    .social-card.linkedin:hover { border-color:rgba(10,102,194,0.5); box-shadow:0 0 20px rgba(10,102,194,0.2); }
+    .social-card.github:hover   { border-color:rgba(255,255,255,0.2); box-shadow:0 0 20px rgba(255,255,255,0.08); }
+    .social-card.upwork:hover   { border-color:rgba(20,163,84,0.5);   box-shadow:0 0 20px rgba(20,163,84,0.2); }
+    .social-card.gmail:hover    { border-color:rgba(234,67,53,0.5);   box-shadow:0 0 20px rgba(234,67,53,0.2); }
+
+    .social-icon {
+      width:40px; height:40px;
+      border-radius:var(--radius-sm);
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0;
+    }
+    .social-name   { font-size:0.82rem; font-weight:600; color:var(--text-primary); line-height:1; margin-bottom:0.2rem; }
+    .social-handle { font-size:0.72rem; color:var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:110px; }
+
+    .contact-form { display:flex; flex-direction:column; gap:var(--space-sm); }
+
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-sm); }
+
+    .form-group { display:flex; flex-direction:column; gap:0.4rem; }
+
+    .form-group label {
+      font-size:0.78rem;
+      font-weight:600;
+      color:var(--text-secondary);
+      letter-spacing:0.05em;
+      text-transform:uppercase;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      transition: all var(--transition);
+      resize: vertical;
+      outline: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color:var(--text-muted); }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: rgba(99,102,241,0.5);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
+    }
+    .form-group textarea { min-height:130px; }
+
+    .form-success {
+      display:none;
+      padding:var(--space-sm) var(--space-md);
+      border-radius:var(--radius-md);
+      background:rgba(34,197,94,0.1);
+      border:1px solid rgba(34,197,94,0.25);
+      color:#86efac;
+      font-size:0.9rem;
+      font-weight:500;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-subtle);
+      padding-block: var(--space-lg);
+    }
+
+    .footer-inner {
+      display:flex; flex-direction:column; align-items:center; gap:var(--space-md); text-align:center;
+    }
+
+    .footer-copy { font-size:0.85rem; color:var(--text-muted); }
+
+    .footer-socials { display:flex; gap:var(--space-md); }
+
+    .footer-social-link {
+      width:36px; height:36px;
+      display:flex; align-items:center; justify-content:center;
+      border-radius:var(--radius-sm);
+      background:var(--bg-card);
+      border:1px solid var(--border-card);
+      color:var(--text-muted);
+      transition:all var(--transition);
+    }
+    .footer-social-link:hover {
+      color:var(--text-primary);
+      border-color:rgba(99,102,241,0.4);
+      transform:translateY(-2px);
+    }
+
+    /* Back to top */
+    #back-to-top {
+      position:fixed;
+      bottom:2rem; right:2rem;
+      width:44px; height:44px;
+      border-radius:var(--radius-md);
+      background:var(--accent-gradient);
+      color:#fff;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 4px 20px rgba(99,102,241,0.4);
+      z-index:900;
+      opacity:0;
+      transform:translateY(16px);
+      pointer-events:none;
+      transition:all var(--transition);
+    }
+    #back-to-top.visible { opacity:1; transform:translateY(0); pointer-events:all; }
+    #back-to-top:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(99,102,241,0.55); }
+
+    /* ============================================================
+       RESPONSIVE — TABLET 768px+
+    ============================================================ */
+    @media (min-width: 768px) {
+      .hero-grid { grid-template-columns: 60% 40%; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr 1fr; }
+      .reviews-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+      .photo-ring-wrap { width:320px; height:320px; }
+    }
+
+    /* ============================================================
+       RESPONSIVE — DESKTOP 1024px+
+    ============================================================ */
+    @media (min-width: 1024px) {
+      .nav-links { display: flex; }
+      .hamburger { display: none; }
+      .skills-grid { grid-template-columns: repeat(4,1fr); }
+      .reviews-grid { grid-template-columns: repeat(3,1fr); }
+      .photo-ring-wrap { width:380px; height:380px; }
+      .badge-php    { top:6%;  left:-24%; }
+      .badge-laravel { top:36%; left:-30%; }
+      .badge-wp     { top:66%; left:-20%; }
+      .badge-python { top:12%; right:-26%; }
+      .badge-aws    { top:66%; right:-18%; }
+    }
+
+    /* ============================================================
+       MOBILE ONLY — max 767px
+    ============================================================ */
+    @media (max-width: 767px) {
+      .hamburger { display:flex; }
+      .nav-links  { display:none; }
+      .btn-hire   { display:none; }
+      .hero-photo-col { order:-1; }
+      .photo-ring-wrap { width:220px; height:220px; }
+      .badge-php    { top:5%;  left:-8%; }
+      .badge-laravel { display:none; }
+      .badge-wp     { top:70%; left:-8%; }
+      .badge-python { top:5%;  right:-8%; }
+      .badge-aws    { top:70%; right:-8%; }
+      .form-row { grid-template-columns:1fr; }
+      .social-cards { grid-template-columns:1fr; }
+      .hero-stats { gap:var(--space-md); }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200 font-sans">
-  <header class="bg-white dark:bg-gray-800 shadow">
-    <div class="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-primary">Sourav Chakraborty</h1>
-      <nav>
-        <a href="#about" class="mx-2 hover:text-green-600 dark:hover:text-green-400">About</a>
-        <a href="#portfolio" class="mx-2 hover:text-green-600 dark:hover:text-green-400">Portfolio</a>
-        <a href="#reviews" class="mx-2 hover:text-green-600 dark:hover:text-green-400">Reviews</a>
-        <a href="#contact" class="mx-2 hover:text-green-600 dark:hover:text-green-400">Contact</a>
-      </nav>
-      <button
-  @click="dark = !dark"
-  :aria-label="dark ? 'Switch to light mode' : 'Switch to dark mode'"
-  :title="dark ? 'Switch to light mode' : 'Switch to dark mode'"
-  class="p-2 rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
->
-  <template x-if="!dark">
-    <!-- Moon icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
-    </svg>
-  </template>
-  <template x-if="dark">
-    <!-- Sun icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-8.66h1M3.34 12H2.33m15.36 6.36l.71.71M6.34 6.34l.71.71m12.02-1.41l.71.71M4.22 19.78l.71.71M12 8a4 4 0 100 8 4 4 0 000-8z" />
-    </svg>
-  </template>
-</button>
+<body>
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<header id="navbar" role="banner">
+  <nav class="nav-inner" aria-label="Primary navigation">
+    <a href="#hero" class="nav-logo" aria-label="Sourav Chakraborty — Home">
+      <span class="nav-logo-badge" aria-hidden="true">SC</span>
+      Sourav Chakraborty
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#about"     data-section="about">About</a></li>
+      <li><a href="#skills"    data-section="skills">Skills</a></li>
+      <li><a href="#portfolio" data-section="portfolio">Portfolio</a></li>
+      <li><a href="#reviews"   data-section="reviews">Reviews</a></li>
+      <li><a href="#contact"   data-section="contact">Contact</a></li>
+    </ul>
+
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <a href="#contact" class="btn-hire" aria-label="Hire Sourav Chakraborty">
+        <span>Hire Me</span>
+      </a>
+      <button class="hamburger" id="hamburger-btn"
+              aria-label="Toggle navigation menu"
+              aria-expanded="false"
+              aria-controls="mobile-drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile Drawer -->
+<div class="drawer-overlay" id="drawer-overlay" aria-hidden="true"></div>
+<nav class="mobile-drawer" id="mobile-drawer" aria-label="Mobile navigation">
+  <a href="#about"     onclick="closeDrawer()">About</a>
+  <a href="#skills"    onclick="closeDrawer()">Skills</a>
+  <a href="#portfolio" onclick="closeDrawer()">Portfolio</a>
+  <a href="#reviews"   onclick="closeDrawer()">Reviews</a>
+  <a href="#contact"   onclick="closeDrawer()">Contact</a>
+  <a href="#contact"
+     class="btn btn-primary"
+     style="margin-top:1rem;justify-content:center;"
+     onclick="closeDrawer()">Hire Me</a>
+</nav>
+
+<main>
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section id="hero" aria-labelledby="hero-heading">
+  <div class="container">
+    <div class="hero-grid">
+
+      <!-- Left column -->
+      <div class="hero-text-col">
+        <div class="hero-badge" aria-label="Currently available for work">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          Available for Work ✦
+        </div>
+
+        <h1 class="hero-h1" id="hero-heading">
+          Full-Stack<br>
+          <span class="gradient-text">Developer</span>
+        </h1>
+
+        <div class="hero-typewriter-wrap" aria-live="polite" aria-atomic="true">
+          <span id="typewriter-text"></span><span class="cursor" aria-hidden="true"></span>
+        </div>
+
+        <p class="hero-bio">
+          8+ years building <strong>high-traffic web apps</strong>, SaaS platforms, and custom APIs.
+          Core stack: <strong>PHP · Laravel · WordPress · Python · Node.js</strong>
+        </p>
+
+        <div class="hero-ctas">
+          <a href="#portfolio" class="btn btn-primary">
+            View My Work
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+          <a href="https://professional-sourav.github.io/portfolio/Sourav_Chakraborty_CV.pdf"
+             target="_blank" rel="noopener" class="btn btn-outline">
+            Download CV
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="hero-stats" role="list" aria-label="Career highlights">
+          <div class="stat-item" role="listitem">
+            <span class="stat-value">8+</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item" role="listitem">
+            <span class="stat-value">50+</span>
+            <span class="stat-label">Projects Delivered</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item" role="listitem">
+            <span class="stat-value">5★</span>
+            <span class="stat-label">Client Reviews</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column — photo -->
+      <div class="hero-photo-col" aria-hidden="true">
+        <div class="photo-ring-wrap">
+          <div class="photo-ring"></div>
+          <div class="photo-inner">
+            <img
+              src="https://professional-sourav.github.io/portfolio/Me%20Prof.jpg"
+              alt="Sourav Chakraborty — Full-Stack Developer"
+              loading="eager"
+              onerror="this.parentElement.style.background='linear-gradient(135deg,#6366f1,#06b6d4)'"
+            />
+          </div>
+          <!-- Floating skill badges -->
+          <span class="float-badge badge-php">🐘 PHP</span>
+          <span class="float-badge badge-laravel">🔴 Laravel</span>
+          <span class="float-badge badge-wp">🔵 WordPress</span>
+          <span class="float-badge badge-python">🐍 Python</span>
+          <span class="float-badge badge-aws">☁️ AWS</span>
+        </div>
+      </div>
 
     </div>
-  </header>
+  </div>
+</section>
 
-  <main class="max-w-6xl mx-auto p-6">
-    <section id="about" class="mb-10">
-      <h2 class="text-xl font-semibold mb-4 text-primary">About Me</h2>
-        <div class="flex flex-col md:flex-row items-start md:items-start gap-6">
-            <img src="Me Prof.jpg" alt="Sourav Chakraborty" class="w-40 h-40 object-cover rounded-lg shadow">
-            <div>
-                <p class="leading-relaxed">
-                    I am Sourav Chakraborty, a Full-Stack Developer from India with over 8 years of experience in software and web development.
-                    My core strengths lie in Core PHP, Laravel, WordPress, JavaScript(Vanilla JS, jQuery, React.js) and Python. I’ve contributed to backend-heavy teams, developing high-traffic APIs
-                    and integrating with third-party services like Twilio, MailGun, SendGrid, Shopify, and Zoho.
-                </p>
-                <p class="mt-4 leading-relaxed">
-                    I have deep experience building custom WordPress plugins and themes using Elementor, Divi, Thrive, and custom frameworks.
-                    I’ve extended functionality in major plugins like Yoast and developed complete solutions for WooCommerce-based e-commerce sites.
-                </p>
-                <p class="mt-4 leading-relaxed">
-                    In Laravel, I’ve handled job queues, real-time broadcasting with Pusher, Redis caching, and robust service-based application design. I follow the Service pattern regularly and am also comfortable with Repository structures. I have extensive experience with advanced Laravel features including Events, Listeners, Observers, Policies, Gates, Jobs, Queues, Notifications, Broadcasting, Middleware, Schedulers, Task Batching, Laravel Horizon, Eloquent Relationships, Model Binding, Custom Macros, Morphing, Pipeline, Dependency Injection, Form Requests, Validation Rules, and Service Providers. Batch processing, API Resources, and Sanctum for token-based auth are also part of my everyday toolkit.
-                </p>
-                <p class="mt-4 leading-relaxed">
-                    I’ve solved challenges like real-time iframe-based content loading, scraping with fallback services like ScrapeBee, and X-Frame security issues.
-                    I also work with Python, Node.js, and React.js for data handling, scripting, and interactive frontends. I prefer Tailwind CSS for clean frontend design.
-                </p>
-                <p class="mt-4 leading-relaxed">
-                    I'm experienced in CI/CD using GitHub Actions and Docker. I regularly deploy and manage scalable infrastructure on AWS including EC2, AMI, RDS, VPC, S3, ECS, ALB, and Lambda.
-                </p>
+<!-- ============================================================
+     SKILLS / MY ARSENAL
+============================================================ -->
+<section id="skills" aria-labelledby="skills-heading">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Tech Stack</span>
+      <h2 class="section-title" id="skills-heading">My <span class="gradient-text">Arsenal</span></h2>
+      <div class="divider" aria-hidden="true"></div>
+    </div>
+
+    <div class="skills-grid">
+
+      <div class="skill-card reveal reveal-delay-1">
+        <div class="skill-card-header">
+          <div class="skill-icon skill-icon-backend" aria-hidden="true">⚙️</div>
+          <div>
+            <div class="skill-card-title">Backend</div>
+            <div class="skill-card-sub">Server-side &amp; APIs</div>
+          </div>
+        </div>
+        <div class="skill-pills">
+          <span class="pill pill-indigo">PHP</span>
+          <span class="pill pill-indigo">Laravel</span>
+          <span class="pill pill-indigo">Python</span>
+          <span class="pill pill-indigo">Node.js</span>
+          <span class="pill pill-indigo">REST APIs</span>
+          <span class="pill pill-indigo">GraphQL</span>
+          <span class="pill pill-indigo">CodeIgniter</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal reveal-delay-2">
+        <div class="skill-card-header">
+          <div class="skill-icon skill-icon-frontend" aria-hidden="true">🎨</div>
+          <div>
+            <div class="skill-card-title">Frontend</div>
+            <div class="skill-card-sub">UI &amp; interactivity</div>
+          </div>
+        </div>
+        <div class="skill-pills">
+          <span class="pill pill-cyan">JavaScript</span>
+          <span class="pill pill-cyan">Vue.js</span>
+          <span class="pill pill-cyan">React.js</span>
+          <span class="pill pill-cyan">Next.js</span>
+          <span class="pill pill-cyan">Tailwind CSS</span>
+          <span class="pill pill-cyan">Livewire</span>
+          <span class="pill pill-cyan">Alpine.js</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal reveal-delay-3">
+        <div class="skill-card-header">
+          <div class="skill-icon skill-icon-cms" aria-hidden="true">🛒</div>
+          <div>
+            <div class="skill-card-title">CMS &amp; E-Commerce</div>
+            <div class="skill-card-sub">Content &amp; commerce</div>
+          </div>
+        </div>
+        <div class="skill-pills">
+          <span class="pill pill-purple">WordPress</span>
+          <span class="pill pill-purple">WooCommerce</span>
+          <span class="pill pill-purple">Elementor</span>
+          <span class="pill pill-purple">Filament</span>
+          <span class="pill pill-purple">Divi</span>
+          <span class="pill pill-purple">ACF</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal reveal-delay-4">
+        <div class="skill-card-header">
+          <div class="skill-icon skill-icon-devops" aria-hidden="true">☁️</div>
+          <div>
+            <div class="skill-card-title">DevOps &amp; Cloud</div>
+            <div class="skill-card-sub">Infrastructure &amp; CI/CD</div>
+          </div>
+        </div>
+        <div class="skill-pills">
+          <span class="pill pill-orange">AWS EC2</span>
+          <span class="pill pill-orange">AWS S3</span>
+          <span class="pill pill-orange">AWS RDS</span>
+          <span class="pill pill-orange">AWS Lambda</span>
+          <span class="pill pill-orange">Docker</span>
+          <span class="pill pill-orange">GitHub Actions</span>
+          <span class="pill pill-orange">Redis</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PORTFOLIO
+============================================================ -->
+<section id="portfolio" aria-labelledby="portfolio-heading">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Work</span>
+      <h2 class="section-title" id="portfolio-heading">Selected <span class="gradient-text">Work</span></h2>
+      <div class="divider" aria-hidden="true"></div>
+    </div>
+
+    <div class="filter-tabs reveal" role="group" aria-label="Filter projects by category">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="laravel">Laravel</button>
+      <button class="filter-btn" data-filter="wordpress">WordPress</button>
+      <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+    </div>
+
+    <div class="portfolio-grid" id="portfolio-grid">
+
+      <article class="project-card reveal" data-tags="wordpress laravel" aria-label="Atarim — WordPress collaboration platform">
+        <div class="project-bar" style="background:linear-gradient(90deg,#6366f1,#818cf8)"></div>
+        <div class="project-body">
+          <h3 class="project-name">Atarim</h3>
+          <div class="project-pills">
+            <span class="pill pill-purple">WordPress</span>
+            <span class="pill pill-indigo">Laravel</span>
+          </div>
+          <p class="project-desc">Real-time collaboration tools &amp; API integrations for web teams.</p>
+          <a href="https://atarim.io" target="_blank" rel="noopener noreferrer" class="project-link">
+            Visit Site <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="project-card reveal reveal-delay-1" data-tags="wordpress" aria-label="UNSW — University healthcare portal">
+        <div class="project-bar" style="background:linear-gradient(90deg,#06b6d4,#22d3ee)"></div>
+        <div class="project-body">
+          <h3 class="project-name">UNSW</h3>
+          <div class="project-pills">
+            <span class="pill pill-purple">WordPress</span>
+          </div>
+          <p class="project-desc">Healthcare dashboards for carer management at a leading university.</p>
+          <a href="https://www.unsw.edu.au/" target="_blank" rel="noopener noreferrer" class="project-link">
+            Visit Site <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="project-card reveal reveal-delay-2" data-tags="laravel" aria-label="COSNET — Telecom backend">
+        <div class="project-bar" style="background:linear-gradient(90deg,#8b5cf6,#a78bfa)"></div>
+        <div class="project-body">
+          <h3 class="project-name">COSNET</h3>
+          <div class="project-pills">
+            <span class="pill pill-indigo">Laravel</span>
+          </div>
+          <p class="project-desc">Backend optimization for a Swiss telecom provider.</p>
+          <a href="https://ch.cosnet.co/" target="_blank" rel="noopener noreferrer" class="project-link">
+            Visit Site <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="project-card reveal reveal-delay-3" data-tags="laravel ecommerce" aria-label="American Saudi Supply — B2B eCommerce">
+        <div class="project-bar" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div>
+        <div class="project-body">
+          <h3 class="project-name">American Saudi Supply</h3>
+          <div class="project-pills">
+            <span class="pill pill-indigo">Laravel</span>
+            <span class="pill pill-orange">WooCommerce</span>
+          </div>
+          <p class="project-desc">B2B eCommerce platform with shipping &amp; invoice automation.</p>
+          <a href="https://americansaudisupply.com/" target="_blank" rel="noopener noreferrer" class="project-link">
+            Visit Site <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="project-card reveal" data-tags="laravel" aria-label="Hus.se — Swedish property listings">
+        <div class="project-bar" style="background:linear-gradient(90deg,#10b981,#34d399)"></div>
+        <div class="project-body">
+          <h3 class="project-name">Hus.se</h3>
+          <div class="project-pills">
+            <span class="pill pill-indigo">Laravel</span>
+          </div>
+          <p class="project-desc">Performance optimization for Sweden's property listings platform.</p>
+          <a href="https://hus.se/" target="_blank" rel="noopener noreferrer" class="project-link">
+            Visit Site <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="project-card reveal reveal-delay-1" data-tags="wordpress ecommerce" aria-label="Intercontinental Melbourne — Luxury hotel booking">
+        <div class="project-bar" style="background:linear-gradient(90deg,#ec4899,#f472b6)"></div>
+        <div class="project-body">
+          <h3 class="project-name">Intercontinental Melbourne</h3>
+          <div class="project-pills">
+            <span class="pill pill-purple">WordPress</span>
+            <span class="pill pill-orange">WooCommerce</span>
+          </div>
+          <p class="project-desc">Luxury hotel booking system with custom modules &amp; integrations.</p>
+          <a href="https://www.melbourne.intercontinental.com" target="_blank" rel="noopener noreferrer" class="project-link">
+            Visit Site <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="project-card reveal reveal-delay-2" data-tags="ecommerce wordpress" aria-label="1800Granola — Organic eCommerce">
+        <div class="project-bar" style="background:linear-gradient(90deg,#f97316,#fb923c)"></div>
+        <div class="project-body">
+          <h3 class="project-name">1800Granola</h3>
+          <div class="project-pills">
+            <span class="pill pill-orange">WooCommerce</span>
+            <span class="pill pill-purple">WordPress</span>
+          </div>
+          <p class="project-desc">Organic eCommerce with custom cart &amp; discount flow engineering.</p>
+          <a href="https://1800granola.com/" target="_blank" rel="noopener noreferrer" class="project-link">
+            Visit Site <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="project-card reveal reveal-delay-3" data-tags="laravel" aria-label="WP Vigil — WordPress monitoring SaaS">
+        <div class="project-bar" style="background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div>
+        <div class="project-body">
+          <h3 class="project-name">WP Vigil</h3>
+          <div class="project-pills">
+            <span class="pill pill-indigo">Laravel</span>
+            <span class="pill pill-cyan">Filament</span>
+          </div>
+          <p class="project-desc">SaaS dashboard for real-time WordPress site monitoring.</p>
+          <a href="https://www.wpvigil.com/" target="_blank" rel="noopener noreferrer" class="project-link">
+            Visit Site <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="project-card reveal" data-tags="laravel" aria-label="CareLineLive — Home care dashboards">
+        <div class="project-bar" style="background:linear-gradient(90deg,#06b6d4,#6366f1)"></div>
+        <div class="project-body">
+          <h3 class="project-name">CareLineLive</h3>
+          <div class="project-pills">
+            <span class="pill pill-indigo">Laravel</span>
+            <span class="pill pill-cyan">Livewire</span>
+          </div>
+          <p class="project-desc">Healthcare dashboards for home care provider management.</p>
+          <a href="https://coastal.carelinelive.com/" target="_blank" rel="noopener noreferrer" class="project-link">
+            Visit Site <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="project-card reveal reveal-delay-1" data-tags="wordpress" aria-label="Next Stop Who Knows — Travel blog">
+        <div class="project-bar" style="background:linear-gradient(90deg,#22c55e,#86efac)"></div>
+        <div class="project-body">
+          <h3 class="project-name">Next Stop Who Knows</h3>
+          <div class="project-pills">
+            <span class="pill pill-purple">WordPress</span>
+          </div>
+          <p class="project-desc">Travel blog with custom affiliate system &amp; content automation.</p>
+          <a href="http://www.nextstopwhoknows.com/" target="_blank" rel="noopener noreferrer" class="project-link">
+            Visit Site <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     REVIEWS
+============================================================ -->
+<section id="reviews" aria-labelledby="reviews-heading">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Testimonials</span>
+      <h2 class="section-title" id="reviews-heading">What Clients <span class="gradient-text">Say</span></h2>
+      <div class="divider" aria-hidden="true"></div>
+    </div>
+
+    <div class="reviews-grid">
+
+      <article class="review-card reveal" aria-label="Review: Members Listing CMS, 4.7 stars">
+        <div class="review-quote-bg" aria-hidden="true">"</div>
+        <div class="review-stars" aria-label="4.7 out of 5 stars">
+          <!-- SVG star macro inline for brevity -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <defs>
+              <linearGradient id="s47" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="70%" stop-color="#f59e0b"/>
+                <stop offset="70%" stop-color="#334155"/>
+              </linearGradient>
+            </defs>
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="url(#s47)"/>
+          </svg>
+          <span style="font-size:0.78rem;color:var(--text-muted);margin-left:4px;">4.7</span>
+        </div>
+        <p class="review-text">"Fast, often available, quality work worth every penny. We will continue with Sourav."</p>
+        <div class="review-meta">
+          <span class="review-project">Members Listing CMS</span>
+          <span class="review-date">Jun – Jul 2016</span>
+        </div>
+      </article>
+
+      <article class="review-card reveal reveal-delay-1" aria-label="Review: Web Applications for Business, 5 stars">
+        <div class="review-quote-bg" aria-hidden="true">"</div>
+        <div class="review-stars" aria-label="5 out of 5 stars">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span style="font-size:0.78rem;color:var(--text-muted);margin-left:4px;">5.0</span>
+        </div>
+        <p class="review-text">"Produced to spec code and apps we still use today. Highly recommend."</p>
+        <div class="review-meta">
+          <span class="review-project">Web Applications for Business</span>
+          <span class="review-date">Aug 2016 – Jan 2018</span>
+        </div>
+      </article>
+
+      <article class="review-card reveal reveal-delay-2" aria-label="Review: Full-Stack Laravel Developer, 5 stars">
+        <div class="review-quote-bg" aria-hidden="true">"</div>
+        <div class="review-stars" aria-label="5 out of 5 stars">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span style="font-size:0.78rem;color:var(--text-muted);margin-left:4px;">5.0</span>
+        </div>
+        <p class="review-text">"Good resource. Will work with him for sure."</p>
+        <div class="review-meta">
+          <span class="review-project">Full-Stack Laravel Developer</span>
+          <span class="review-date">Dec 2018 – Jan 2019</span>
+        </div>
+      </article>
+
+      <article class="review-card reveal" aria-label="Review: PHP and CodeIgniter Developer, 5 stars">
+        <div class="review-quote-bg" aria-hidden="true">"</div>
+        <div class="review-stars" aria-label="5 out of 5 stars">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span style="font-size:0.78rem;color:var(--text-muted);margin-left:4px;">5.0</span>
+        </div>
+        <p class="review-text">"Top-notch communication, met all deadlines, strong skills."</p>
+        <div class="review-meta">
+          <span class="review-project">PHP &amp; CodeIgniter Developer</span>
+          <span class="review-date">Mar 2020</span>
+        </div>
+      </article>
+
+      <article class="review-card reveal reveal-delay-1" aria-label="Review: WordPress Developer, 5 stars">
+        <div class="review-quote-bg" aria-hidden="true">"</div>
+        <div class="review-stars" aria-label="5 out of 5 stars">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span style="font-size:0.78rem;color:var(--text-muted);margin-left:4px;">5.0</span>
+        </div>
+        <p class="review-text">"Did a great job with my projects. Will definitely work again!"</p>
+        <div class="review-meta">
+          <span class="review-project">WordPress Developer</span>
+          <span class="review-date">Oct – Nov 2020</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+============================================================ -->
+<section id="contact" aria-labelledby="contact-heading">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Get In Touch</span>
+      <h2 class="section-title" id="contact-heading">Let's Build <span class="gradient-text">Something</span></h2>
+      <div class="divider" aria-hidden="true"></div>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- Left: social cards -->
+      <div class="reveal">
+        <p class="contact-subtitle">Open to freelance, contract, and full-time opportunities.</p>
+
+        <div class="social-cards" role="list">
+
+          <a href="https://linkedin.com/in/iamsouravch" target="_blank" rel="noopener noreferrer"
+             class="social-card linkedin" role="listitem" aria-label="LinkedIn — iamsouravch">
+            <div class="social-icon" style="background:rgba(10,102,194,0.15);" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#0a66c2">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                <rect x="2" y="9" width="4" height="12"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
             </div>
-        </div>
-    </section>
+            <div>
+              <div class="social-name">LinkedIn</div>
+              <div class="social-handle">iamsouravch</div>
+            </div>
+          </a>
 
-    <section id="portfolio" class="mb-10">
-      <h2 class="text-xl font-semibold mb-4 text-primary">Portfolio</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        <a href="https://atarim.io" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">Atarim Plugin & API</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">WordPress + Laravel</p>
-          <p>Built real-time collaboration tools, custom plugins, and API integrations for agencies and clients.</p>
-        </a>
-        <a href="https://www.unsw.edu.au/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">UNSW</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">WordPress</p>
-          <p>Developed dashboards and healthcare data interfaces for a carer management platform.</p>
-        </a>
-        <a href="https://ch.cosnet.co/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">COSNET</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Laravel</p>
-          <p>Custom WordPress site setup and backend optimization for a telecom service provider.</p>
-        </a>
-        <a href="https://americansaudisupply.com/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">American Saudi Supply</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Laravel Ecommerce</p>
-          <p>Designed and developed a B2B WooCommerce store with shipping and invoice automation.</p>
-        </a>
-        <a href="https://hus.se/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">Hus.se</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Laravel</p>
-          <p>Optimized performance and implemented custom reporting features for property listings.</p>
-        </a>
-        <a href="https://www.melbourne.intercontinental.com" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">Intercontinental Melbourne</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">WordPress & WooCommerce</p>
-          <p>Supported migration and updates for a luxury hotel booking site with custom modules.</p>
-        </a>
-        <a href="http://www.nextstopwhoknows.com/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">Next Stop Who Knows</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Travel Blog (WordPress)</p>
-          <p>Maintenance and customization of a travel blogger’s site with affiliate systems.</p>
-        </a>
-        <a href="https://1800granola.com/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">WordPress, 1800Granola</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">WooCommerce</p>
-          <p>Built an organic granola eCommerce store with custom cart logic and discount flows.</p>
-        </a>
-        <a href="https://www.wpvigil.com/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">WP Vigil</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Laravel + Filament + WordPress</p>
-          <p>Developed dashboards and healthcare data interfaces for a carer management platform.</p>
-        </a>
-        <a href="https://coastal.carelinelive.com/" target="_blank" class="block p-4 border bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded shadow hover:shadow-lg transition-all">
-          <h3 class="font-semibold text-lg text-primary">CareLineLive Coastal</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Laravel + Livewire</p>
-          <p>Developed dashboards and healthcare data interfaces for a carer management platform.</p>
-        </a>
-      </div>
-    </section>
+          <a href="https://github.com/professional-sourav" target="_blank" rel="noopener noreferrer"
+             class="social-card github" role="listitem" aria-label="GitHub — professional-sourav">
+            <div class="social-icon" style="background:rgba(255,255,255,0.07);" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#e2e8f0">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+              </svg>
+            </div>
+            <div>
+              <div class="social-name">GitHub</div>
+              <div class="social-handle">professional-sourav</div>
+            </div>
+          </a>
 
-    <section id="reviews" class="mb-10">
-      <h2 class="text-xl font-semibold mb-4 text-primary">Client Reviews</h2>
-      <div class="space-y-6">
-        <div class="p-4 bg-white dark:bg-gray-800 dark:border dark:border-gray-700 dark:text-gray-200 rounded shadow">
-          <h3 class="font-semibold text-lg text-primary">Members listing CMS</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Jun 3, 2016 - Jul 26, 2016 | ⭐ 4.7</p>
-          <p class="mt-2">"What I liked with Sourav is that he is fast, often available and the quality of his work is worth every penny. We will continue our work with Sourav for new projects."</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 dark:border dark:border-gray-700 dark:text-gray-200 rounded shadow">
-          <h3 class="font-semibold text-lg text-primary">Development of Various Web Applications for Business</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Aug 24, 2016 - Jan 25, 2018 | ⭐ 5.0</p>
-          <p class="mt-2">"Sourav was a pleasure to work with and produced to spec code and web apps which we still use to this day. I can highly recommend him for any similar work!"</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 dark:border dark:border-gray-700 dark:text-gray-200 rounded shadow">
-          <h3 class="font-semibold text-lg text-primary">Looking for a Full Stack, Laravel developer to hire for full time</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Dec 26, 2018 - Jan 3, 2019 | ⭐ 5.0</p>
-          <p class="mt-2">"Good resource. Will work with him for sure."</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 dark:border dark:border-gray-700 dark:text-gray-200 rounded shadow">
-          <h3 class="font-semibold text-lg text-primary">Looking PHP and codeigniter Developer</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Mar 5, 2020 - Mar 18, 2020 | ⭐ 5.0</p>
-          <p class="mt-2">"His communication was top-notch, he met all deadlines, and his skills were strong. I enjoyed working with him and will likely have additional jobs for him in the future."</p>
-        </div>
-        <div class="p-4 bg-white dark:bg-gray-800 dark:border dark:border-gray-700 dark:text-gray-200 rounded shadow">
-          <h3 class="font-semibold text-lg text-primary">Need Wordpress Developer ASAP!</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">Oct 31, 2020 - Nov 2, 2020 | ⭐ 5.0</p>
-          <p class="mt-2">"Sourav did a great job with my website projects so far! Will definitely be working with him again!"</p>
+          <a href="https://www.upwork.com/freelancers/souravthedeveloper" target="_blank" rel="noopener noreferrer"
+             class="social-card upwork" role="listitem" aria-label="Upwork — souravthedeveloper">
+            <div class="social-icon" style="background:rgba(20,163,84,0.12);" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+                <text x="4" y="24" font-size="22" font-weight="900" fill="#14a354" font-family="Arial,sans-serif">U</text>
+              </svg>
+            </div>
+            <div>
+              <div class="social-name">Upwork</div>
+              <div class="social-handle">souravthedeveloper</div>
+            </div>
+          </a>
+
+          <a href="mailto:professional.sourav@gmail.com"
+             class="social-card gmail" role="listitem" aria-label="Gmail — professional.sourav@gmail.com">
+            <div class="social-icon" style="background:rgba(234,67,53,0.12);" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="#ea4335" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div>
+              <div class="social-name">Gmail</div>
+              <div class="social-handle">professional.sourav</div>
+            </div>
+          </a>
+
         </div>
       </div>
-    </section>
 
-    <section id="contact">
-      <h2 class="text-xl font-semibold mb-2 text-primary">Contact</h2>
-        <div class="flex items-center space-x-6 mt-4">
-            <a href="https://linkedin.com/in/iamsouravch" target="_blank" class="flex items-center space-x-2 text-primary hover:underline">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.26c-.97 0-1.75-.79-1.75-1.75s.79-1.74 1.75-1.74 1.75.78 1.75 1.74c0 .96-.79 1.75-1.75 1.75zm13.5 11.26h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.89v1.37h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.6v5.57z"/></svg>
-                <span>LinkedIn</span>
-            </a>
-            <a href="https://github.com/professional-sourav" target="_blank" class="flex items-center space-x-2 text-primary hover:underline">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5c-6.63 0-12 5.37-12 12 0 5.3 3.438 9.8 8.205 11.385.6.113.82-.26.82-.577v-2.023c-3.338.724-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.832 2.807 1.303 3.492.997.108-.775.418-1.303.762-1.603-2.665-.304-5.466-1.333-5.466-5.93 0-1.31.468-2.38 1.236-3.22-.123-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.3 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.29-1.552 3.296-1.23 3.296-1.23.655 1.653.242 2.873.12 3.176.77.84 1.235 1.91 1.235 3.22 0 4.61-2.804 5.624-5.475 5.92.43.37.823 1.102.823 2.222v3.293c0 .32.217.694.825.576 4.765-1.587 8.2-6.087 8.2-11.385 0-6.63-5.37-12-12-12z"/></svg>
-                <span>GitHub</span>
-            </a>
-            <a href="https://www.upwork.com/freelancers/souravthedeveloper" target="_blank" class="flex items-center space-x-2 text-primary hover:underline">
-                <img src="upwork.png" alt="Upwork" class="w-6 h-6 inline-block mr-1 align-middle" />
-                <span class="align-middle">Upwork</span>
-            </a>
+      <!-- Right: form -->
+      <div class="reveal reveal-delay-2">
+        <form class="contact-form" id="contact-form" novalidate aria-label="Contact form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contact-name">Name</label>
+              <input type="text" id="contact-name" name="name"
+                     placeholder="Your name" required autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email</label>
+              <input type="email" id="contact-email" name="email"
+                     placeholder="you@email.com" required autocomplete="email" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" name="message"
+                      placeholder="Tell me about your project…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start;">
+            Send Message
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+          <div class="form-success" id="form-success" role="alert" aria-live="polite">
+            ✓ Message sent! I'll get back to you soon.
+          </div>
+        </form>
+      </div>
 
-            <a href="mailto:professional.sourav@gmail.com" class="flex items-center space-x-2 text-primary hover:underline">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 13.5l-12-9v18h24v-18l-12 9zm0-3.6l12-9h-24l12 9z"/></svg>
-                <span>Gmail</span>
-            </a>
-        </div>
-    </section>
-  </main>
+    </div>
+  </div>
+</section>
+</main>
 
-  <footer class="text-center text-sm text-gray-500 dark:text-gray-400 mt-10 mb-4">
-    &copy; 2025 Sourav Chakraborty. All rights reserved.
-  </footer>
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-socials" aria-label="Social media links">
+        <a href="https://linkedin.com/in/iamsouravch" target="_blank" rel="noopener noreferrer"
+           class="footer-social-link" aria-label="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
+        <a href="https://github.com/professional-sourav" target="_blank" rel="noopener noreferrer"
+           class="footer-social-link" aria-label="GitHub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+          </svg>
+        </a>
+        <a href="https://www.upwork.com/freelancers/souravthedeveloper" target="_blank" rel="noopener noreferrer"
+           class="footer-social-link" aria-label="Upwork">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <text y="18" font-size="14" font-weight="900" fill="currentColor" font-family="Arial,sans-serif">U</text>
+          </svg>
+        </a>
+        <a href="mailto:professional.sourav@gmail.com"
+           class="footer-social-link" aria-label="Email">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </a>
+      </div>
 
-  <!-- Scroll to Top Button -->
-  <button x-show="showScrollTop" @click="window.scrollTo({ top: 0, behavior: 'smooth' })" 
-          class="fixed bottom-5 right-5 bg-primary text-white px-4 py-2 rounded-full shadow-lg hover:bg-green-700 transition-all" 
-          x-transition.opacity>
-    ↑ Top
-  </button>
+      <p class="footer-copy">
+        &copy; 2025 Sourav Chakraborty. Built with passion, deployed with precision.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button id="back-to-top" aria-label="Scroll back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <polyline points="18 15 12 9 6 15"/>
+  </svg>
+</button>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ---- NAVBAR: smart hide/show + glassmorphism ---- */
+  const navbar = document.getElementById('navbar');
+  let lastScroll = 0, ticking = false;
+
+  function updateNav() {
+    const cur = window.scrollY;
+    navbar.classList.toggle('scrolled', cur > 80);
+    navbar.classList.toggle('hidden', cur > lastScroll && cur > 200);
+    lastScroll = cur <= 0 ? 0 : cur;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(updateNav); ticking = true; }
+  }, { passive: true });
+
+  /* ---- HAMBURGER / DRAWER ---- */
+  const hamburger = document.getElementById('hamburger-btn');
+  const drawer    = document.getElementById('mobile-drawer');
+  const overlay   = document.getElementById('drawer-overlay');
+
+  function openDrawer() {
+    hamburger.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  window.closeDrawer = closeDrawer;
+
+  hamburger.addEventListener('click', () =>
+    drawer.classList.contains('open') ? closeDrawer() : openDrawer()
+  );
+  overlay.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+  /* ---- TYPEWRITER ---- */
+  const phrases = ['Laravel Specialist', 'WordPress Expert', 'SaaS Builder', 'API Architect'];
+  const twEl = document.getElementById('typewriter-text');
+  let pi = 0, ci = 0, deleting = false;
+
+  function type() {
+    const phrase = phrases[pi];
+    twEl.textContent = deleting ? phrase.slice(0, ci - 1) : phrase.slice(0, ci + 1);
+    deleting ? ci-- : ci++;
+
+    if (!deleting && ci === phrase.length) {
+      deleting = true;
+      setTimeout(type, 2000);
+      return;
+    }
+    if (deleting && ci === 0) {
+      deleting = false;
+      pi = (pi + 1) % phrases.length;
+    }
+    setTimeout(type, deleting ? 55 : 90);
+  }
+
+  setTimeout(type, 900);
+
+  /* ---- SCROLL REVEAL ---- */
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* ---- SCROLL SPY ---- */
+  const navLinks = document.querySelectorAll('.nav-links a[data-section]');
+
+  const spyObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => a.classList.toggle('active', a.dataset.section === e.target.id));
+      }
+    });
+  }, { threshold: 0.4 });
+
+  document.querySelectorAll('section[id]').forEach(s => spyObs.observe(s));
+
+  /* ---- PORTFOLIO FILTER ---- */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('#portfolio-grid .project-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(card => {
+        card.classList.toggle('hidden', f !== 'all' && !(card.dataset.tags || '').includes(f));
+      });
+    });
+  });
+
+  /* ---- CONTACT FORM ---- */
+  const form    = document.getElementById('contact-form');
+  const success = document.getElementById('form-success');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name    = form.querySelector('[name="name"]').value.trim();
+    const email   = form.querySelector('[name="email"]').value.trim();
+    const message = form.querySelector('[name="message"]').value.trim();
+    if (!name || !email || !message) return;
+
+    const sub  = encodeURIComponent('Portfolio enquiry from ' + name);
+    const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
+    window.location.href = 'mailto:professional.sourav@gmail.com?subject=' + sub + '&body=' + body;
+
+    success.style.display = 'block';
+    form.reset();
+    setTimeout(() => { success.style.display = 'none'; }, 7000);
+  });
+
+  /* ---- BACK TO TOP ---- */
+  const btt = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => btt.classList.toggle('visible', window.scrollY > 500), { passive: true });
+  btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  /* ---- SMOOTH SCROLL for anchor links ---- */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+    });
+  });
+
+})();
+</script>
 </body>
 </html>
