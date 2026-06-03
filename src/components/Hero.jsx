@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useTypewriter } from '../hooks/useTypewriter'
 
 async function downloadResume(setStatus) {
@@ -26,6 +26,10 @@ async function downloadResume(setStatus) {
 export default function Hero() {
   const typeText = useTypewriter()
   const [resumeStatus, setResumeStatus] = useState('idle')
+  const heroImgRef = useRef(null)
+  useEffect(() => {
+    heroImgRef.current?.setAttribute('fetchpriority', 'high')
+  }, [])
 
   return (
     <section id="hero" aria-labelledby="hero-heading">
@@ -106,10 +110,10 @@ export default function Hero() {
               <div className="photo-ring" />
               <div className="photo-inner">
                 <img
-                  src={`${import.meta.env.BASE_URL}Me Prof.jpg`}
+                  ref={heroImgRef}
+                  src={`${import.meta.env.BASE_URL}sourav-chakraborty-portrait.jpg`}
                   alt="Sourav Chakraborty — Full-Stack Developer"
                   loading="eager"
-                  fetchpriority="high"
                   onError={e => { e.currentTarget.parentElement.style.background = 'linear-gradient(135deg,#6366f1,#06b6d4)' }}
                 />
               </div>
