@@ -106,7 +106,7 @@ export default function Hero() {
               <div className="photo-ring" />
               <div className="photo-inner">
                 <img
-                  src="https://professional-sourav.github.io/portfolio/Me%20Prof.jpg"
+                  src={`${import.meta.env.BASE_URL}Me Prof.jpg`}
                   alt="Sourav Chakraborty — Full-Stack Developer"
                   loading="eager"
                   onError={e => { e.currentTarget.parentElement.style.background = 'linear-gradient(135deg,#6366f1,#06b6d4)' }}
