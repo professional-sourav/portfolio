@@ -2537,20 +2537,30 @@
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   const html = document.documentElement;
 
+  // v2 key — only set when the user manually toggles, so old auto-saved 'dark' is ignored
+  const THEME_KEY = 'portfolio-theme-v2';
+
   function applyTheme(theme) {
     html.setAttribute('data-theme', theme);
-    localStorage.setItem('portfolio-theme', theme);
     themeToggleBtn.setAttribute('aria-label',
       theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
     );
   }
 
-  // Initialise from saved preference; fall back to dark
-  const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
-  applyTheme(savedTheme);
+  // 6 AM–6 PM → light, otherwise dark
+  function themeByTime() {
+    const hour = new Date().getHours();
+    return (hour >= 6 && hour < 18) ? 'light' : 'dark';
+  }
+
+  // Use manual override if set; otherwise auto-detect from time
+  const manualTheme = localStorage.getItem(THEME_KEY);
+  applyTheme(manualTheme || themeByTime());
 
   themeToggleBtn.addEventListener('click', () => {
-    applyTheme(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+    const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    localStorage.setItem(THEME_KEY, next);
+    applyTheme(next);
   });
 
 })();
