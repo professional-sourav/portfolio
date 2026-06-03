@@ -26,7 +26,17 @@ function StarRating({ rating }) {
           <polygon points={STAR_PATH} fill={`url(#${gradId})`} />
         </svg>
       )}
-      <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginLeft: '4px' }}>
+      <span style={{
+        marginLeft: '6px',
+        padding: '0.15rem 0.55rem',
+        borderRadius: '999px',
+        background: 'linear-gradient(135deg,rgba(245,158,11,0.18),rgba(251,191,36,0.1))',
+        border: '1px solid rgba(245,158,11,0.35)',
+        fontSize: '0.78rem',
+        fontWeight: '700',
+        color: '#fbbf24',
+        letterSpacing: '0.02em',
+      }}>
         {rating.toFixed(1)}
       </span>
     </div>
