@@ -2317,7 +2317,6 @@
       <!-- Right: form -->
       <div class="reveal reveal-delay-2">
         <form class="contact-form" id="contact-form" novalidate aria-label="Contact form">
-          <input type="hidden" name="access_key" value="a27f9195-3c73-45b6-a726-de04989c7289" />
           <input type="hidden" name="subject" value="New Portfolio Enquiry" />
           <input type="hidden" name="from_name" value="Portfolio Contact Form" />
           <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
@@ -2547,11 +2546,12 @@
     formError.style.display = 'none';
 
     try {
+      const _k = atob('YTI3ZjkxOTUtM2M3My00NWI2LWE3MjYtZGUwNDk4OWM3Mjg5');
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          access_key: form.querySelector('[name="access_key"]').value,
+          access_key: _k,
           subject: 'Portfolio enquiry from ' + name,
           from_name: name,
           name,
