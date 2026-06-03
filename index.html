@@ -1570,15 +1570,25 @@
       .hamburger { display:flex; }
       .nav-links  { display:none; }
       .btn-hire   { display:none; }
+
+      /* Section spacing — 56px vertical (industry standard mobile) */
+      section { padding-block: 3.5rem; }
+      .section-header { margin-bottom: var(--space-lg); }
+
+      /* Hero layout */
       .hero-photo-col { order:-1; }
+      .hero-grid { padding-block: var(--space-sm); gap: var(--space-lg); }
+
+      /* Photo ring + badges — 3 per side symmetrically */
       .photo-ring-wrap { width:220px; height:220px; }
-      .badge-php    { top:5%;  left:-8%; }
-      .badge-laravel { display:none; }
-      .badge-wp     { top:70%; left:-8%; }
-      .badge-python { top:5%;  right:-8%; }
-      .badge-react  { display:none; }
+      .badge-php    { top:8%;  left:-10%; }
+      .badge-laravel { top:40%; left:-10%; display:flex; }
+      .badge-wp     { top:72%; left:-10%; }
+      .badge-python { top:8%;  right:-10%; }
+      .badge-react  { top:40%; right:-10%; display:flex; }
       .badge-n8n    { display:none; }
-      .badge-aws    { top:70%; right:-8%; }
+      .badge-aws    { top:72%; right:-10%; }
+
       .form-row { grid-template-columns:1fr; }
       .social-cards { grid-template-columns:1fr; }
       .hero-stats { gap:var(--space-md); }
