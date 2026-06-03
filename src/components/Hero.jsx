@@ -52,7 +52,7 @@ export default function Hero() {
             <p className="hero-bio">
               8+ years building <strong>high-traffic web apps</strong>, SaaS platforms, and scalable APIs.
               Deep specialist in <strong>Laravel &amp; Filament</strong> — including a multi-tenant SaaS.
-              Core stack: <strong>PHP · Laravel · WordPress · Python · Node.js</strong>
+              Core stack: <strong>PHP · Laravel · WordPress · Python · React.js · Node.js</strong>
             </p>
 
             <div className="hero-ctas">

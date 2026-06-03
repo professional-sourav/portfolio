@@ -2,9 +2,9 @@ import Reveal from './Reveal'
 
 const STATS = [
   { num: '8+', label: 'Years with Laravel & PHP' },
-  { num: '10+', label: 'Laravel projects delivered' },
+  { num: '15+', label: 'Laravel projects delivered' },
   { num: '★', label: 'Filament admin panels & custom resources' },
-  { num: '1', label: 'Multi-tenant SaaS shipped (WP Vigil)' },
+  { num: '1', label: 'Multi-tenant SaaS shipped (Trailmate)' },
 ]
 
 export default function LaravelSpotlight() {
